@@ -1,0 +1,40 @@
+﻿@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Domain.Models.UserAdministration
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse6">Paciente</a>
+                <i data-toggle="collapse" href="#collapse6" class="fa fa-toggle-down"></i>
+            </h4>
+        </div>
+        <div id="collapse6" class="panel-collapse collapse">
+            <Loading IsLoading="_isLoading">
+                <EditForm Model="Value" OnValidSubmit="@Save">
+                    <DropDownMenu Data="@_patients"
+                                  Label="Paciente"
+                                  TextProperty="Cédula"
+                                  DefaultText="Sin filtro"
+                                  Value="Value._selectedPatientModel.Patient"
+                                  ValueExpression="() => Value._selectedPatientModel.Patient"
+                                  ValueChanged="@((Paciente p) => OnChangePatient(p))"
+                                  UseValidation="false"
+                                  Required="false" />
+                    <div class="text-left">
+                        @if (!_changesMade)
+                        {
+                            <button disabled type="submit" class="btn btn-primary">Aplicar</button>
+                            <button disabled class="btn btn-outline-secondary">Descartar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" data-toggle="collapse" href="#collapse6">Aplicar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapse6">Descartar</button>
+                        }
+                    </div>
+                </EditForm>
+            </Loading>
+        </div>
+    </div>
+</div>

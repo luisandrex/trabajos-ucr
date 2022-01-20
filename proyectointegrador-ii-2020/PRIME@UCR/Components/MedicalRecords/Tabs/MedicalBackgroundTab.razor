@@ -1,0 +1,128 @@
+﻿@attribute [Authorize]
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.MedicalRecords
+@implements IDisposable
+@inject IMedicalBackgroundService MedicalBackgroundService
+@inject IAlergyService AllergyService
+@inject IChronicConditionService ChronicConditionService
+
+<h2>Antecedentes y Alergias</h2>
+<div class="jumbotron white-panel">
+
+    <Table TableItem="Antecedentes" Items="Antecedentes" PageSize="3" class="table table-bordered">
+        <Column TableItem="Antecedentes" Title="Antecedentes del paciente" Field="@(x => x.ListaAntecedentes.NombreAntecedente)" Width="18%" />
+        <Column TableItem="Antecedentes" Title="Fecha de creación" Field="@(x => x.FechaCreacion)" Width="18%" />
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron antecedentes registrados.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+    <div>
+    <Loading IsLoading="_contAnte == null">
+        <EditForm EditContext="_contAnte" OnValidSubmit="SaveMedicalBackground">
+            <label>Antecedentes</label>
+            <RadzenDropDown Multiple="true" Data="ListaAntecedentes"
+                            TextProperty="NombreAntecedente"
+                            ValueProperty="Id"
+                            @bind-Value="@RegisteredBackgrounds"
+                            Placeholder="Seleccione antecedentes"
+                            class="form-control" />
+            <div class="mt-2">
+                @if (!_saveBackgroundButtonEnabled)
+                {
+                    <button disabled type="submit" class="btn btn-primary">Guardar</button>
+                    <button disabled class="btn btn-outline-secondary">Descartar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button role="button" class="btn btn-outline-secondary" @onclick="LoadRecordBackgrounds" @onclick:preventDefault>Descartar</button>
+                }
+            </div>
+        </EditForm>
+    </Loading>
+    </div>
+</div>
+
+<br>
+<br>
+<div class="jumbotron white-panel">
+    <Table TableItem="Alergias" Items="Alergias" PageSize="3" class="table table-bordered">
+        <Column TableItem="Alergias" Title="Alergias del paciente" Field="@(x => x.ListaAlergia.NombreAlergia)" Width="18%" />
+        <Column TableItem="Alergias" Title="Fecha de creación" Field="@(x => x.FechaCreacion)" Width="18%" />
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron alergias registradas.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+    <div>
+    <Loading IsLoading="_contAle == null">
+        <EditForm EditContext="_contAle" OnValidSubmit="SaveAllergies">
+            <label>Alergias</label>
+            <RadzenDropDown Multiple="true" Data="ListaAlergia"
+                            TextProperty="NombreAlergia"
+                            ValueProperty="Id"
+                            @bind-Value="@RegisteredAllergies"
+                            Placeholder="Seleccione alergias"
+                            class="form-control" />
+            <div class="mt-2">
+                @if (!_saveAllergyButtonEnabled)
+                {
+                    <button disabled type="submit" class="btn btn-primary">Guardar</button>
+                    <button disabled class="btn btn-outline-secondary">Descartar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button role="button" class="btn btn-outline-secondary" @onclick="LoadAllergies" @onclick:preventDefault>Descartar</button>
+                }
+            </div>
+        </EditForm>
+    </Loading>
+    </div>
+</div>
+<div class="jumbotron white-panel">
+    <Table TableItem="PadecimientosCronicos" Items="PadecimientosCronicos" PageSize="3" class="table table-bordered">
+        <Column TableItem="PadecimientosCronicos" Title="Padecimientos Cronicos del paciente" Field="@(x => x.ListaPadecimiento.NombrePadecimiento)" Width="18%" />
+        <Column TableItem="PadecimientosCronicos" Title="Fecha de creación" Field="@(x => x.FechaCreacion)" Width="18%" />
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron Padecimientos registrados.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+    <div>
+    <Loading IsLoading="_contCond == null">
+        <EditForm EditContext="_contCond" OnValidSubmit="SaveConditions">
+            <label>Padecimientos crónicos</label>
+            <RadzenDropDown Multiple="true" Data="ListaPadecimiento"
+                            TextProperty="NombrePadecimiento"
+                            ValueProperty="Id"
+                            @bind-Value="@RegisteredConditions"
+                            Placeholder="Seleccione padecimientos crónicos"
+                            class="form-control" />
+            <div class="mt-2">
+                @if (!_saveConditionButtonEnabled)
+                {
+                    <button disabled type="submit" class="btn btn-primary">Guardar</button>
+                    <button disabled class="btn btn-outline-secondary">Descartar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button role="button" class="btn btn-outline-secondary" @onclick="LoadConditions" @onclick:preventDefault>Descartar</button>
+                }
+            </div>
+        </EditForm>
+    </Loading>
+
+    </div>
+</div>

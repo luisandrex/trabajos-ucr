@@ -1,0 +1,43 @@
+﻿@using PRIME_UCR.Domain.Constants;
+
+<div class="row">
+    <table class="table table-responsive" width="100%">
+        <tbody>
+            <tr>
+                <RadzenMenu>
+                    @for (var index = 0; index < _states.List.Count; ++index)
+                    {
+                    <div class="text-center">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="@setProgressIndicator(index)" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg>
+                        @if (index < CurrentStateIndex)
+                        {
+                            @* Case where incident has already been in that state. *@
+                            <span data-toggle="tooltip" title="Completado">
+                                <RadzenMenuItem Text=@_states.List[index].Item2 class="@setStateColor(index)" />
+                            </span>
+                        }
+                        else if (index > CurrentStateIndex)
+                        {
+                            @* Case where incident hasn't been in that state yet. *@
+                            <span data-toggle="tooltip" title="Pendiente">
+                                <RadzenMenuItem Text=@_states.List[index].Item2 class="@setStateColor(index)" />
+                            </span>
+                        }
+                        else
+                        {
+                            @* Case where incident is in current state *@
+                            <span data-toggle="tooltip" title="En progreso">
+                                <RadzenMenuItem Text=@_states.List[index].Item2 class="@setStateColor(index)" />
+                            </span>
+                        }
+
+                    </div>
+                    }
+                </RadzenMenu>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />

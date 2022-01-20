@@ -1,0 +1,75 @@
+﻿@inherits ChecklistToAsignBase
+@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.CheckLists;
+
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants;
+@attribute [HasPermission(AuthorizationPermissions.CanInstantiateChecklist)]
+<link href="css/Checklist.css" rel="stylesheet" />
+
+
+<Loading IsLoading="lists == null">
+    <div class="wrapper">
+        <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px; padding-top:10px;">
+            <EditForm Model="lists">
+                <Table TableItem="CheckList" Items="lists" PageSize="3">
+                    <Column TableItem="CheckList" Title="" Field="@(tempList => lists)" Width="1%">
+                        <Template Context="checkbox">
+                            <center>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck @checkbox.Id" checked="@TempDetail[TempsIds.IndexOf(checkbox.Id)].IsDone" @onchange="((ChangeEventArgs c) => CheckIempList(checkbox.Id,checkbox,c))" /> @* @bind="TempDetail[TempsIds.IndexOf(checkbox.Id)].IsDone" @onclick="upate_Count" *@
+                                    <label class="custom-control-label" for="customCheck @checkbox.Id"></label>
+                                </div>
+                            </center>
+                        </Template>
+                    </Column>
+
+                    <Column TableItem="CheckList" Title="Nombre" Field="@( x => x.Nombre)" Width="20%" />
+                    <Column TableItem="CheckList" Title="Tipo" Field="@(x => x.Tipo)" Width="10%" />
+                    <Column TableItem="CheckList" Title="Descripción" Field="@(x => x.Descripcion)" Width="10%" />
+
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No se encontraron listas de chequeo disponibles
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" />
+                </Table>
+            </EditForm>
+        </div>
+        <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px;padding-top:10px;">
+            <h5>Listas de chequeo asignadas al incidente</h5>
+            <EditForm Model="TempLists" OnValidSubmit="@HandleSubmit">
+                <Table TableItem="CheckList" Items="TempLists" PageSize="3">
+                    <Column TableItem="CheckList" Title="Nombre" Field="@( x => x.Nombre)" Width="20%">
+                    </Column>
+                    <Column TableItem="CheckList" Title="Tipo" Field="@(x => x.Tipo)" Width="10%">
+                    </Column>
+                    <Column TableItem="CheckList" Title="Descripción" Field="@(x => x.Descripcion)" Width="10%">
+                    </Column>
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No se han asignado listas de chequeo
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" />
+                </Table>
+                <div align="center">
+                    <button type="submit" class="btn btn-primary" id="BP_LC0" disabled="@dont_save">Guardar</button>
+                    <a class="btn btn-outline-secondary" @onclick="CancelAsignment" id="a_LC3">Cancelar</a>
+                </div>
+            </EditForm>
+            <br />
+            @if (saved)
+            {
+            <h6>Guardando asignacion de listas de chequeo: @porcentComplete%</h6>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: @porcentComplete%" aria-valuenow="@porcentComplete" aria-valuemin="0" aria-valuemax="100">@porcentComplete%</div>
+            </div>
+            }
+        </div>
+        @if (showInfo)
+        {<SummaryMessage Content="states" Values="details" Class="info" />}
+    </div>
+</Loading>

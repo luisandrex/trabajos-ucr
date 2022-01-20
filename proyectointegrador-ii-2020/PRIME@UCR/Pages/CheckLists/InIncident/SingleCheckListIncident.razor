@@ -1,0 +1,221 @@
+﻿@page "/incidents/{incidentcod}/{plantillaid:int}"
+@inherits SingleCheckListIncidentBase
+@using PRIME_UCR.Components.CheckLists
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants;
+@using PRIME_UCR.Components.CheckLists.InIncident
+@attribute [HasPermission(AuthorizationPermissions.CanManageIncidentChecklists)]
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<h2>Listas de chequeo asignada a un incidente</h2>
+<hr />
+@if (_exist)
+{
+    <Loading IsLoading="list == null">
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <CheckListMenuIncident incidentcod=@incidentcod />@*view all checklist  asign in incident*@
+            </div>
+            <div class="col">
+                <div class="container" id="contAll_LC" style="background:white;">
+                    <SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" /> @*insident state*@
+                    <h3 style="margin-bottom: 3px;">Definición de la lista de chequeo</h3>
+                    <div id="def_LC_Inst">
+                        <div class="input-group row">
+                            <div class="col-sm-11">
+                                <div class="input-group row">
+                                    <label for="checklistName" class="col-sm-2 col-form-label">Nombre: </label>
+                                    <div class="col-sm-9">
+                                        <p style="margin-bottom: 0px; margin-top: 1px;">@list.Nombre </p>
+                                    </div>
+                                </div>
+                                <div class="input-group row">
+                                    <label for="checklistDescription" class="col-sm-2 col-form-label"><span style="color:black">Descripción: </span></label>
+                                    <div class="col-sm-9">
+                                        <p style="margin-bottom: 0px; margin-top: 1px;">@list.Descripcion </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                @*
+                                     User Story PIG01IIC20-267 LG - Agregar imagen descriptiva a lista de chequeo
+                                    Calls a component to upload images into the checklist
+                                    <LoadImageComponent @bind-list="@list" />*@
+                                <img src="@list.ImagenDescriptiva" width="50" height="50" />
+                            </div>
+                        </div>
+
+                        <div class="input-group row">
+                            <label for="checklistType" class="col-sm-2 col-form-label"><span style="color:black">Tipo: </span></label>
+                            <div class="col-sm-4" style="padding-left: 0;">
+                                <p style="margin-bottom: 0px; margin-top: 1px;">@list.Tipo</p>
+                            </div>
+                            <label for="checklistOrder" class="col-sm-1 col-form-label"><span style="color:black">Orden: </span></label>
+                            <div class="col-sm-2">
+                                <p style="margin-bottom: 0px; margin-top: 1px;">@list.Orden</p>
+                            </div>
+                            <label for="checklistId" class="col-sm-1 col-form-label"><span style="color:black">Id: </span></label>
+                            <span class="col-sm-2">
+                                <p style="margin-bottom: 0px; margin-top: 1px;"> @list.Id </p>
+                            </span>
+                        </div>
+                    </div>
+                    <div id="state_LC">
+                        <div class="input-group row">
+                            <label for="state" class="col-sm-3 col-form-label"><span style="color:black">Estado de la lista:</span></label>
+                            <div class="col-sm-3">
+                                <p style="margin-bottom: 0px; margin-top: 1px;">@stateInstanceList</p>
+                            </div>
+                            <label for="inicio" class="col-sm-3 col-form-label"><span style="color:black">Fecha-hora  inicio: </span></label>
+                            <div class="col-sm-4">
+                                <p style="margin-bottom: 0px; margin-top: 1px;">@StartTime</p>
+                            </div>
+                        </div>
+                        <div class="input-group row">
+                            <label for="fin" class="col-sm-3 col-form-label"><span style="color:black">Fecha-hora finalizada:</span></label>
+                            <div class="col-sm-3">
+                                <p style="margin-bottom: 0px; margin-top: 1px;">@EndTime</p>
+                            </div>
+                                <label for="Duración" class="col-sm-3 col-form-label"><span style="color:black">Duración:</span></label>
+                                <div class="col-sm-4">
+                                    <p style="margin-bottom: 0px; margin-top: 1px;">@MyDuration</p>
+                                </div>
+                        </div>
+                    </div>
+                    <h3> Items de la lista de chequeo</h3>
+                    <SummaryMessage Content="states" Values="details" Class="info" /> @*checklist in incident state*@
+                <div id="Body_LC">
+                    @if (items == null)
+                    {
+                        <p>Cargando items.</p>
+                    }
+                    else
+                    {
+                        if (items.Count() == 0)
+                        {
+                            <p>No se ha creado ningún item para esta lista de chequeo en este incidente.</p>
+                        }
+                        else
+                        {
+                            <AuthorizeView Policy="@AuthorizationPermissions.CanCheckItemsInChecklists.ToString()">
+                                <NotAuthorized>
+                                    @{ canEdit = false; }
+                                </NotAuthorized>
+                            </AuthorizeView>
+                            <AuthorizeView Policy="@AuthorizationPermissions.CanAttachMultimediaInChecklists.ToString()">
+                                <NotAuthorized>
+                                    @{ canEdit = false; }
+                                </NotAuthorized>
+                            </AuthorizeView>
+                            @for (int tempIndex = 0; tempIndex < orderedList.Count(); tempIndex++)
+                            {
+                                PRIME_UCR.Domain.Models.CheckLists.InstanciaItem itemInList = orderedList[tempIndex];
+                                itemIndex = GetItemIndex(itemInList);
+                                string style = orderedListLevel[tempIndex] * 2 + "em";
+                                <table class="table checklist-table">
+                                    @* Contains information about every item in this checklist *@
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2" class="align-middle" style="padding-left: @style; width: 10px;">
+                                                <p style="margin:auto">⁞⁞</p>
+                                            </td>
+                                            <td rowspan="2" class="align-middle" style="width: 100px;">
+                                                @* Displys the image of the item *@
+
+                                                <div style="width: 100%; display:inline-flex;">
+                                                    @if (validateEdit == 1) // state in transfer
+                                                    {
+                                                        <div class="custom-control custom-checkbox" style="margin:auto">
+                                                            <input type="checkbox" class="custom-control-input" disabled="@HasSubItems(itemInList)" id="customCheck @itemInList.ItemId" checked="@itemInList.Completado" @onchange="@((ChangeEventArgs c) => CheckItem(itemInList, c))" />
+                                                            <label class="custom-control-label" for="customCheck @itemInList.ItemId"></label>
+                                                        </div>
+                                                    }
+                                                    else // state not started or finished
+                                                    {
+                                                        <div class="custom-control custom-checkbox" style="margin:auto">
+                                                            <input type="checkbox" class="custom-control-input" disabled="@true" id="customCheck @itemInList.ItemId" checked="@itemInList.Completado" />
+                                                            <label class="custom-control-label" for="customCheck @itemInList.ItemId"></label>
+                                                        </div>
+                                                    }
+                                                    <p>&nbsp;</p> @* to change*@
+                                                    <button type="button" class="none" data-toggle="dropdown" id="BN_LC">
+                                                        <img src="@items[itemIndex].ImagenDescriptiva" width="50" height="50" data-toggle="tooltip" title="Cambiar imagen" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <th class="align-middle" data-toggle="tooltip" title="@items[itemIndex].Nombre">@truncate(@items[itemIndex].Nombre, orderedListLevel[itemIndex], 1)</th>
+                                            @if (!HasSubItems(itemInList))
+                                            {
+                                                if (validateEdit == 0)
+                                                { //state not started
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">&nbsp;&nbsp;</p>
+                                                    </td>
+                                                    <td rowspan="2" class="align-middle" align="right" style="width: 54px"></td>
+                                                }
+                                                else if (validateEdit == 1)
+                                                { //state started
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                         <p style=" padding-top: 0px; padding-bottom: 0px;"> <span title="DD/MM/AA\nHH:MM:SS">@itemInList.FechaHoraInicio</span></p>
+                                                    </td>
+                                                    <td rowspan="2" class="align-middle" align="right" style="width: 54px">
+                                                        <MultimediaContentComponent MultimediaContent="@MyMultimediaContent[itemIndex]" OnFileUpload="(MultimediaContent mc) => OnFileUpload(itemInList, mc)" CallingPlace="checkListItem" ApCode=@incidentcod CheckListName=@list.Nombre CheckListItemName=@items[itemIndex].Nombre></MultimediaContentComponent>
+                                                    </td>
+                                                }
+                                                else if (validateEdit == 2)
+                                                { //state finished
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">@itemInList.FechaHoraInicio</p>
+                                                    </td>
+                                                    <td rowspan="2" class="align-middle" align="right" style="width: 54px">
+                                                        <MultimediaContentComponent MultimediaContent="@MyMultimediaContent[itemIndex]" ViewOnly="true"></MultimediaContentComponent>
+                                                    </td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @if (HasSubItems(itemInList) == true && itemInList.Completado == true)
+                                                {
+                                                    var n1 = itemInList.FechaHoraFin;
+                                                    var n2 = itemInList.FechaHoraInicio;
+                                                    TimeSpan duration = (TimeSpan)(n1 - n2);
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">Duración: @duration.Hours:@duration.Minutes:@duration.Seconds</p>
+                                                    </td>
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">&nbsp;&nbsp;</p>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">&nbsp;&nbsp;</p>
+                                                    </td>
+                                                    <td rowspan="2" class="align-middle" style="margin:auto; width: 100px;">
+                                                        <p style=" padding-top: 0px; padding-bottom: 0px; ">&nbsp;&nbsp;</p>
+                                                    </td>
+                                                }
+                                            }
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle" title="@items[itemIndex].Descripcion">@truncate(@items[itemIndex].Descripcion, orderedListLevel[itemIndex], 2)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <MatThemeProvider Theme="@AddButtonTheme">
+            <MatFAB Icon="@MatIconNames.Arrow_back" Class="app-fab--absolute" OnClick="@(_ => Redirect())" data-toggle="tooltip" title="Regresar al incidente"></MatFAB>
+        </MatThemeProvider>
+    </Loading>
+}
+else
+{
+    <h4 class="text-danger">No se encontró el incidente solicitado.</h4>
+}

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>PRIME_UCR.Infrastructure</RootNamespace>
+    <UserSecretsId>539038a1-5d3f-4f0a-94c1-5b4b15e2c02a</UserSecretsId>
+    <LangVersion>default</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DataProviders\Implementations\EntityConfiguration\**" />
+    <EmbeddedResource Remove="DataProviders\Implementations\EntityConfiguration\**" />
+    <None Remove="DataProviders\Implementations\EntityConfiguration\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Repositories\Sql\Appointments\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="3.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
+    <PackageReference Include="RepoDb.SqlServer" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PRIME@UCR.Application\PRIME@UCR.Application.csproj" />
+    <ProjectReference Include="..\PRIME@UCR.Domain\PRIME@UCR.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

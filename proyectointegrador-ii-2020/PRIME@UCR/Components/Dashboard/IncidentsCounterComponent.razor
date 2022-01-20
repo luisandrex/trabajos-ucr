@@ -1,0 +1,20 @@
+﻿@using PRIME_UCR.Components.Dashboard.IncidentsCounter
+@using PRIME_UCR.Components.Controls 
+
+<Loading IsLoading="!Value.isReadyToShowCounters">
+    <div class="row justify-content-center">
+        <EditForm Model="_selectedFilter">
+            <DropDownMenu Data="@_filters"
+                          Label="Rango de tiempo"
+                          Value="_selectedFilter"
+                          ValueExpression="() => _selectedFilter"
+                          ValueChanged="@((string s) => OnFilterChange(s))"
+                          UseValidation="false"
+                          Required="false" />
+        </EditForm>
+        <TotalIncidentsCounterComponent IncidentsCounter="@Value" />
+        <MaritimeIncidentsCounterComponent IncidentsCounter="@Value" />
+        <AerialIncidentsCounterComponent incidentsCounter="@Value" />
+        <TerrestrialIncidentsCounterComponent incidentsCounter="@Value" />
+    </div>
+</Loading>

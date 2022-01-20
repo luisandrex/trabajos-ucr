@@ -1,0 +1,61 @@
+﻿@inject IJSRuntime JS
+
+<div class="rt-container">
+
+    <div class="card" style="padding: 20px">
+        <h2 class="rt-align">Grabadora</h2>
+        <hr />
+
+        <MultimediaAlert Message="AlertMessage"></MultimediaAlert>
+        <MultimediaTitleComponent Title="@fileName" Disabled="true"></MultimediaTitleComponent>
+
+        @* Timer *@
+        <div class="row" style="width: 120px; margin: auto;">
+            <p @ref="timer" style="font-size: 24px">00:00:00</p>
+        </div>
+
+        @* Start/Stop Recording Buttons *@
+        <div class="row">
+            <button class="btn btn-primary rt-button" @ref="recordButton" @onclick="OnRecord">Grabar</button>
+
+            <button class="btn btn-danger rt-button hidden" @ref="stopButton" @onclick="OnStop">Detener</button>
+        </div>
+
+        @* Fill div *@
+        <div style="height: 54px" @ref="fillDiv"></div>
+
+        <div class="row" style="margin-top: 20px">
+            @* Recorded Audio *@
+            <audio style="width:280px; margin: auto" @ref="audio"></audio>
+        </div>
+
+        <div class="row" style="margin-top: 20px">
+            <div class="col">
+                @* Exit Button *@
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-danger rt-button" @onclick="OnClose">Salir</button>
+                    </div>
+                </div>
+            </div>
+
+            @* Download Button *@
+            <div class="col">
+                @if (recording || !audioRecorded)
+                {
+                    <button class="btn btn-primary rt-button" disabled>Descargar</button>
+                }
+                <div class="@downloadLinkClass">
+                    <a style="color: white;" @ref="downloadLink">
+                        Descargar
+                    </a>
+                </div>
+                @*<button class="btn btn-primary rt-button" disabled="@notValidSave">Descargar</button>*@
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

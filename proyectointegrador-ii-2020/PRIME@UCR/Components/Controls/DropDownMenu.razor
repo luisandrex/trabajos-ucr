@@ -1,0 +1,42 @@
+@typeparam T
+@inherits InputBase<T>
+
+<div class="form-group">
+    @if (Required)
+    {
+        <label>@Label<strong class="text-danger">*</strong></label>
+    }
+    else
+    {
+        <label>@Label</label>
+    }
+<select id="@Id"
+        class="@($"custom-select {ValidationCssClass}")"
+        value="@SelectedValue"
+        @onchange="OnChangeEvent"
+        disabled="@Disabled">
+    @if (!String.IsNullOrEmpty(DefaultText))
+    {
+        @if (Required)
+        {
+            <option value="@(-1)" selected disabled>@DefaultText</option>
+        }
+        else
+        {
+            <option value="@(-1)" selected>@DefaultText</option>
+        }
+    }
+    @for (int i = 0; i < Data.Count; ++i)
+    {
+        @if (i == _index)
+        {
+            <option selected value="@i">@GetText(Data[i])</option>
+        }
+        else
+        {
+            <option value="@i">@GetText(Data[i])</option>
+        }
+    }
+</select>
+    <ValidationMessage For="ValueExpression" />
+</div>

@@ -1,0 +1,8 @@
+﻿@inject AuthenticationStateProvider _authenticationStateProvider
+
+<p>
+    @GetMessageAsync().Result
+</p>
+@if(@isAuthenticated){
+    <button class="btn btn-primary" role="button" @onclick="goToPageAskPermission" style="height:auto">Solicitar Permiso</button>
+}

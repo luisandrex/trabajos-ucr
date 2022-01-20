@@ -1,0 +1,16 @@
+﻿@code {
+
+    protected override void OnInitialized()
+    {
+        Parent.AddAlertRow(this);
+    }
+
+    [Parameter]
+    public string Header { get; set; }
+
+    [Parameter]
+    public string Message { get; set; }
+
+    [CascadingParameter]
+    public AlertRowMessage Parent { get; set; }
+}

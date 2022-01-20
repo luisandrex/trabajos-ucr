@@ -1,0 +1,75 @@
+﻿<Loading IsLoading="Value == null">
+    <div class="bg-white rounded p-3 col-lg-12">
+
+        <h4>Información personal</h4>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <TextBox Label="Número de cédula" @bind-Value="Value.IdCardNumber" IsRequired="true" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <TextBox Label="Nombre" @bind-Value="Value.Name"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <TextBox Label="Primer apellido" @bind-Value="Value.FirstLastName" />
+            </div>
+            <div class="col-lg-2">
+                <TextBox Label="Segundo apellido" @bind-Value="Value.SecondLastName" Required="false"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <DatePicker Label="Fecha nacimiento" @bind-Value="Value.BirthDate" Min="@DateTime.Today.AddYears(-120)" Max="@DateTime.Today"
+                            Required="false"/>
+            </div>
+        </div>
+        
+        <label>Sexo</label>
+        <br />
+        <form>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" @onclick="SetSexToMale">Masculino
+            </label>
+            &emsp;
+            <label class="radio-inline">
+                <input type="radio" name="optradio" @onclick="SetSexToFemale">Femenino
+            </label>
+            &emsp;
+            <label class="radio-inline">
+                <input type="radio" name="optradio" @onclick="SetSexToOther">Otro
+            </label>
+        </form>
+        <br />
+    </div>
+
+    <br/>
+
+    <div class="bg-white rounded p-3 col-lg-12">
+
+        <h4>Información de contacto</h4>
+
+        <div class="row" >
+            <div class="col-lg-4">
+                <TextBox Label="Correo electrónico" @bind-Value="Value.Email"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <TextBox Label="Número telefónico" @bind-Value="Value.PrimaryPhoneNumber" />
+            </div>
+            <div class="col-lg-2">
+                <TextBox Label="Número secundario" @bind-Value="Value.SecondaryPhoneNumber" Required="false"/>
+            </div>
+        </div>
+
+    </div>
+    <br />
+
+</Loading>

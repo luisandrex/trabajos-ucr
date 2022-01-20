@@ -1,0 +1,31 @@
+@using PRIME_UCR.Components.MedicalRecords.Tabs
+@inject IMedicalBackgroundService MedicalBackgroundService
+@inject IAlergyService AllergyService
+@inject IChronicConditionService ChronicConditionService
+<div class="container">
+    @if (Active == DetailsTab.Info)
+    {
+        <GeneralInfoTab record="@Expediente"
+                        LastAppointment="@UltimaCita" />
+    }
+    else if (Active == DetailsTab.Appointments)
+    {
+        <hr />
+        <Appointments medical_record="@MedicalRecord" />
+    }
+    else if (Active == DetailsTab.MedicalBackgroundTab)
+    {
+        <hr />
+        <MedicalBackgroundTab Antecedentes="@Antecedentes"
+                              Alergias="@Alergias"
+                              PadecimientosCronicos="@PadecimientosCronicos"
+                              ListaAntecedentes="@ListaAntecedentes"
+                              ListaAlergia="@ListaAlergia"
+                              ListaPadecimiento="@ListaPadecimiento"
+                              idExpediente="@Expediente.IdExpediente" />
+    }
+    else
+    {
+        <h4 class="text-danger">Not found</h4>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@using PRIME_UCR.Components.Controls
+
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse1">Fecha</a>
+                <i data-toggle="collapse" href="#collapse1" class="fa fa-toggle-down"></i>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <Loading IsLoading="Value == null">
+                <EditForm Model="Value" OnValidSubmit="@Save">
+                    <DatePicker Value="Value._selectedInitialDate"
+                                ValueExpression="() => Value._selectedInitialDate"
+                                ValueChanged="@((DateTime? d) => OnPickedInitialDate(d))"
+                                Max="Value._selectedFinalDate == null? DateTime.Today.AddYears(20) : Value._selectedFinalDate"
+                                Required="false"
+                                Label="Fecha Inicial" />
+                    <DatePicker Value="Value._selectedFinalDate"
+                                ValueExpression="() => Value._selectedFinalDate"
+                                ValueChanged="@((DateTime? d) => OnPickedFinalDate(d))"
+                                Min="Value._selectedInitialDate == null? DateTime.Today.AddYears(-20) : Value._selectedInitialDate "
+                                Required="false"
+                                Label="Fecha Final" />
+                    <div class="text-left">
+                        @if (!_changesMade)
+                        {
+                            <button disabled type="submit" class="btn btn-primary">Aplicar</button>
+                            <button disabled class="btn btn-outline-secondary">Descartar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" data-toggle="collapse" href="#collapse1">Aplicar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapse1">Descartar</button>
+                        }
+                    </div>
+                </EditForm>
+            </Loading>
+        </div>
+    </div>
+</div>

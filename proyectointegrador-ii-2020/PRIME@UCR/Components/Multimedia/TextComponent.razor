@@ -1,0 +1,45 @@
+﻿@using PRIME_UCR.Application.Services.Multimedia
+@inject IEncryptionService encrypt_service
+
+<div class="rt-container">
+
+    <div class="card" style="padding: 20px">
+        <h2 class="rt-align">Notas</h2>
+        <hr />
+
+        @if (!viewMode)
+        {
+        <MultimediaAlert Message="AlertMessage"></MultimediaAlert>
+        }
+        <form>
+            @* Title *@
+            <div class="form-group">
+                <MultimediaTitleComponent Title="@fileName"
+                                          Disabled="true">
+                </MultimediaTitleComponent>
+
+            </div>
+            @* Text Area *@
+            <div class="form-group">
+                <p class="rt-align">Texto:</p>
+                <textarea class="form-control" id="textArea" rows="6" @bind="text"
+                          disabled="@viewMode"></textarea>
+            </div>
+
+            @if (!viewMode)
+            {
+                @* Submit Button *@
+                <button class="btn btn-primary" @onclick="StoreTextFile">Guardar</button>
+            }
+        </form>
+
+        @* Exit Button *@
+        <div class="row" style="margin-top: 20px">
+            <div class="col">
+                <button class="btn btn-danger rt-button" @onclick="OnClose">Salir</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

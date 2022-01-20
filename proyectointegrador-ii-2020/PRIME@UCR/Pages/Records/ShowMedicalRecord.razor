@@ -1,0 +1,53 @@
+﻿@page "/show-medical-record"
+@using PRIME_UCR.Domain.Models.MedicalRecords
+@using BlazorTable
+@using MatBlazor;
+@using PRIME_UCR.Components.MedicalRecords
+@using PRIME_UCR.Application.Implementations.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeAllMedicalRecords)]
+@inject NavigationManager NavManager
+@inject PRIME_UCR.Application.Services.MedicalRecords.IMedicalRecordService medical_record_service
+
+
+<h3>Lista Expedientes Medicos</h3>
+
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+<Loading IsLoading="medical_records == null">
+    <Table TableItem="Expediente" Items="medical_records" PageSize="@page_size" @ref="MedicalRecordsModel" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+        <Column TableItem="Expediente" Title="Cédula" Field="@(x => x.CedulaPaciente)" Width="20%">
+            <Template>
+                <a href="@get_record_link(context.Id)">@context.CedulaPaciente</a>
+            </Template>
+        </Column>
+
+        <Column TableItem="Expediente" Title="Nombre" Field="@(x => x.Paciente.Nombre)" Width="20%">
+        </Column>
+
+        <Column TableItem="Expediente" Title="Primer Apellido" Field="@(x => x.Paciente.PrimerApellido)" Width="20%">
+        </Column>
+
+        <Column TableItem="Expediente" Title="Segundo Apellido" Field="@(x => x.Paciente.SegundoApellido)" Width="20%">
+        </Column>
+
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron expedientes en el sistema.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+    <PaginationDropdown changeSize="size_changed" MaxElements="medical_records.Count"> </PaginationDropdown>
+
+</Loading>
+
+
+<MatThemeProvider Theme="@AddButtonTheme">
+    <MatFAB Icon="@MatIconNames.Add" Class="app-fab--absolute" OnClick="@(_ => Redirect())"></MatFAB>
+</MatThemeProvider>

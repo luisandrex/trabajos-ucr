@@ -1,0 +1,14 @@
+﻿body {
+}
+
+
+.pagination-component .pagination > li,
+.pagination-component .pagination > li > span {
+    color: black;
+}
+
+.pagination-component .pagination > li.active > span {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}

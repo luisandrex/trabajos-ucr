@@ -1,0 +1,42 @@
+﻿<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+@if (Summary != null)
+{
+    <SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+}
+<Loading IsLoading="_isLoading">
+
+    <table class="table table-bordered text-center">
+
+        <thead>
+            <tr>
+                <th style="width: 20%;">Adjuntar</th>
+                <th style="width: 80%;">Tipo acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in _actionTypes)
+            {
+                <tr>
+                    <td class="text-center">
+                        <MultimediaContentComponent MultimediaContent="_existingFiles[_actionTypes.IndexOf(i)]"
+                                                    OnFileUpload="(MultimediaContent mc) => OnFileUpload(i, mc)"
+                                                    ActionName="@i.Nombre"
+                                                    CallingPlace="action"
+                                                    ApCode="@medical_appointment.Codigo"
+                                                    />
+                    </td>
+                    <td>
+                        <div class="text-left">
+                            @i.Nombre
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</Loading>

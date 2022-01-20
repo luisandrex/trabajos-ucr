@@ -1,0 +1,176 @@
+﻿@using PRIME_UCR.Domain.Models.MedicalRecords
+@using PRIME_UCR.Domain.Models.UserAdministration
+@inject PRIME_UCR.Application.Services.UserAdministration.IPersonService person_service;
+@inject PRIME_UCR.Application.Services.UserAdministration.IPatientService patient_service;
+@inject PRIME_UCR.Application.Services.MedicalRecords.IMedicalRecordService medical_record_service;
+@inject PRIME_UCR.Application.Services.UserAdministration.IDoctorService doctor_service;
+@inject PRIME_UCR.Application.Services.Incidents.ILocationService location_service;
+@inject NavigationManager NavManager
+
+<div class="jumbotron white-panel">
+    <Loading IsLoading="is_loading">
+
+        @if (RecordModel.Paciente != null && !record_inserted)
+        {
+            @switch (patient_status)
+            {
+                case 0:
+                    //medical record and patient already registered.
+                    <StatusMessage Message="El expediente que desea registrar ya se encuentra registrado, si existe algún campo faltante lo puede llenar" Class="primary"></StatusMessage>
+                    break;
+
+                case 1:
+                    //the patient personal data is already on the database, but theres no medical record related to the patient.
+                    <StatusMessage Message="Complete el formulario para finalizar la creación del expediente" Class="primary"></StatusMessage>
+                    break;
+
+                case 2:
+                    //there is neither patient or medical record registered.
+                    <StatusMessage Message="Los datos ingresados no se encuentran registrados, favor llenar el formulario" Class="primary"></StatusMessage>
+                    break;
+
+            }
+        }
+        else
+        {
+            @switch (patient_status)
+            {
+                case -1:
+                    <StatusMessage Message="Ingrese la cedula del paciente" Class="primary"></StatusMessage>
+                    break;
+            }
+        }
+
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                <EditForm EditContext="_context">
+                    <FluentValidationValidator />
+                    <TextBox Label="Cédula del paciente" Value="@RecordModel.CedPaciente" ValueExpression="() => RecordModel.CedPaciente" ValueChanged="(string id) => SetPatientCed(id)" />
+                </EditForm>
+            </div>
+        </div>
+    </Loading>
+    @if (RecordModel.Paciente != null && !patient_inserted)// && (save_record_data_pushed))
+    {
+
+        @switch (patient_status)
+        {
+            case 0:
+                //el expediente ya existe en la base de datos.
+                <StatusMessage Message="El paciente se encuentra registrado" Class="primary"></StatusMessage>
+                break;
+
+            case 1:
+                //el paciente ya se encuentra en la base de datos, pero no existe expediente relacionado al paciente.
+                <StatusMessage Message="Datos personales del paciente" Class="primary"></StatusMessage>
+                break;
+
+            case 2:
+                //no existe ni paciente ni expediente.
+                <StatusMessage Message="El paciente no se encuentra registrado" Class="primary"></StatusMessage>
+                break;
+
+        }
+
+        <Loading IsLoading="is_loading_patient">
+            <div class="row">
+                <div class="col-xl-4 col-lg-6">
+                    <EditForm EditContext="PatientContext">
+                        <FluentValidationValidator />
+                        <TextBox Disabled="patient_status != 2" @bind-Value="RecordModel.Paciente.Nombre" Label="Nombre" /> @* ValueExpression="() => RecordModel.Paciente.Nombre"*@
+                        <TextBox Disabled="patient_status != 2" @bind-Value="RecordModel.Paciente.PrimerApellido" Label="Primer Apellido" />
+
+                        @*no esta registrado ó no se encuentra vacio*@
+                        @if (patient_status == 2 || !String.IsNullOrEmpty(RecordModel.Paciente.SegundoApellido))
+                        {
+                            <TextBox Disabled="patient_status != 2" Required="false" @bind-Value="RecordModel.Paciente.SegundoApellido" Label="Segundo apellido" />
+                        }
+
+                        @if (patient_status == 2 || RecordModel?.Paciente?.FechaNacimiento != null)
+                        {
+                            <DatePicker Disabled="patient_status != 2" @bind-Value="RecordModel.Paciente.FechaNacimiento" Label="Fecha de nacimiento" Max="@DateTime.Today" Min="@DateTime.Today.AddYears(-120)" Required="false" />
+                        }
+                        @if (patient_status == 2 || RecordModel?.Paciente?.Sexo != null)
+                        {
+                            <DropDownMenu T="Gender" Data="genders" Label="Sexo" DefaultText="Seleccione un sexo" TextExpression="@((Gender g) => EnumUtils.GetDescription(g))"
+                                          Required="false" Disabled="patient_status != 2" @bind-Value="RecordModel.Sexo" />
+                        }
+                    </EditForm>
+                </div>
+            </div>
+        </Loading>
+        @if (not_done)
+        {
+            <hr />
+            <StatusMessage Message="Debe ingresar los datos obligatorios" Class="warning"></StatusMessage>
+
+        }
+    }
+        @if (!record_inserted && RecordModel?.Expediente != null)// && !record_inserted
+        {
+            <div class="row">
+                <div class="col-xl-4 col-lg-6">
+                    <EditForm EditContext="RecordContext">
+                        <FluentValidationValidator />
+
+                        @if (medic_status == 1)
+                        {
+                            <StatusMessage Message="Ingrese una cedula de un funcionario valida" Class="warning"></StatusMessage>
+                        }
+
+                        @if (medic_status == 2)
+                        {
+                            <StatusMessage Message="Cedula de funcionario correcta" Class="warning"></StatusMessage>
+                        }
+
+                        @if (RecordModel?.Expediente.CedulaMedicoDuenno == null)
+                        {
+                            <TextBox Label="Cédula médico creador" ValueExpression="() => record.CedulaMedicoDuenno" Required="true" ValueChanged="(string id) => SetMedicCed(id)" />
+                        }
+                        else
+                        {
+                            <TextBox Disabled="true" @bind-Value="RecordModel.Expediente.CedulaMedicoDuenno" Label="Cédula médico creador" />
+                        }
+
+
+                        @if (RecordModel?.Expediente.Clinica == null)
+                        {
+
+                            <DropDownMenu T="CentroMedico" Data="clinics" Label="Centro Médico" DefaultText="Seleccione una Clinica" TextProperty="Nombre" Required="true" Disabled="RecordModel.Expediente.Clinica != null" @bind-Value="RecordModel.CentroMedico" />
+
+                        }
+                        else
+                        {
+                            <TextBox Disabled="true" @bind-Value="RecordModel.Expediente.Clinica" Label="Clinica" />
+                        }
+
+                        @if (RecordModel?.Expediente.CedulaMedicoDuenno == null || RecordModel?.Expediente.Clinica == null)
+                        {
+                            <button class="btn btn-dark" @onclick="SaveData">Guardar</button>
+                        }
+                    </EditForm>
+                </div>
+            </div>
+        }
+    @if (is_loading_record)
+    {
+
+        <hr />
+
+        @if (record_unfinisehd)
+        {
+
+            <StatusMessage Message="Expediente en proceso de creación, favor registrar los datos personales" Class="warning"></StatusMessage>
+        }
+
+    }
+</div>
+
+@if (record_inserted)
+{
+    <StatusMessage Message="Expediente registrado exitosamente" Class="success"></StatusMessage>
+
+}
+
+<hr />
+

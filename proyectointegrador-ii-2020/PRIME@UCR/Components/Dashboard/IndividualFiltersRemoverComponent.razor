@@ -1,0 +1,102 @@
+﻿@using PRIME_UCR.Components.Dashboard.Filters
+
+@if (FilterInfo.OriginType != null)
+{
+    // Origin filter individual remover per house holder type
+    @if (FilterInfo.OriginType == "Domicilio")
+    {
+        <GenericIndividualFilterRemover ExtraLabel="Origen"
+                                        Label="Domicilio"
+                                        ValueChanged="RemoveHouseHoldOriginFilter" />
+
+        @if (FilterInfo.HouseholdOriginFilter.Province != null)
+        {
+            <GenericIndividualFilterRemover ExtraLabel="Provincia origen"
+                                            Label="@FilterInfo.HouseholdOriginFilter.Province.Nombre"
+                                            ValueChanged="RemoveProvinceOriginFilter" />
+        }
+        @if (FilterInfo.HouseholdOriginFilter.Canton != null)
+        {
+            <GenericIndividualFilterRemover ExtraLabel="Cantón origen"
+                                            Label="@FilterInfo.HouseholdOriginFilter.Canton.Nombre"
+                                            ValueChanged="RemoveCantonOriginFilter" />
+        }
+        @if (FilterInfo.HouseholdOriginFilter.District != null)
+        {
+            <GenericIndividualFilterRemover ExtraLabel="Distrito origen"
+                                            Label="@FilterInfo.HouseholdOriginFilter.District.Nombre"
+                                            ValueChanged="RemoveDistrictOriginFilter" />
+        }
+    }
+
+    // Origin filter individual remover per international type
+    @if (FilterInfo.OriginType == "Internacional")
+    {
+        <GenericIndividualFilterRemover ExtraLabel="Origen"
+                                        Label="Internacional"
+                                        ValueChanged="RemoveInternationalOriginFilter" />
+
+        @if (FilterInfo.InternationalOriginFilter.Country != null)
+        {
+            <GenericIndividualFilterRemover ExtraLabel="País origen"
+                                            Label="@FilterInfo.InternationalOriginFilter.Country.Nombre"
+                                            ValueChanged="RemoveCountryOriginFilter" />
+        }
+    }
+
+    // Origin filter individual remover per medical center type
+    @if (FilterInfo.OriginType == "Centro médico")
+    {
+        <GenericIndividualFilterRemover ExtraLabel="Origen"
+                                        Label="Centro médico"
+                                        ValueChanged="RemoveMedicalCenterOriginFilter" />
+
+        @if (FilterInfo.MedicalCenterOriginFilter != null)
+        {
+            <GenericIndividualFilterRemover ExtraLabel="Centro médico origen"
+                                            Label="@FilterInfo.MedicalCenterOriginFilter.MedicalCenter.Nombre"
+                                            ValueChanged="RemoveSpecificMedicalCenterOriginFilter" />
+        }
+    }
+}
+
+@* Remover for destination filter.*@
+@if (FilterInfo.MedicalCenterDestination.MedicalCenter != null)
+{
+    <GenericIndividualFilterRemover ExtraLabel="Centro médico destino"
+                                    Label="@FilterInfo.MedicalCenterDestination.MedicalCenter.Nombre"
+                                    ValueChanged="RemoveMedicalCenterDestinationFilter" />
+}
+
+@* Remover for initial date filter.*@
+@if (FilterInfo.InitialDateFilter.HasValue)
+{
+    <GenericIndividualFilterRemover ExtraLabel="Fecha inicial"
+                                    Label="@FilterInfo.InitialDateFilter.Value.ToString("MM/dd/yyyy")"
+                                    ValueChanged="RemoveInitialDateFilter" />
+}
+
+@* Remover for initial date filter.*@
+@if (FilterInfo.FinalDateFilter.HasValue)
+{
+    <GenericIndividualFilterRemover ExtraLabel="Fecha final"
+                                    Label="@FilterInfo.FinalDateFilter.Value.ToString("MM/dd/yyyy")"
+                                    ValueChanged="RemoveFinalDateFilter" />
+}
+
+@* Remover for modality filter.*@
+@if (FilterInfo.ModalityFilter != null)
+{
+    <GenericIndividualFilterRemover ExtraLabel="Modalidad"
+                                    Label="@FilterInfo.ModalityFilter.Tipo"
+                                    ValueChanged="RemoveModalityFilter" />
+
+}
+
+@* Remover for state filter.*@
+@if (FilterInfo.StateFilter != null && FilterInfo.StateFilter.Nombre != String.Empty)
+{
+    <GenericIndividualFilterRemover ExtraLabel="Estado"
+                                    Label="@FilterInfo.StateFilter.Nombre"
+                                    ValueChanged="RemoveStateFilter" />
+}

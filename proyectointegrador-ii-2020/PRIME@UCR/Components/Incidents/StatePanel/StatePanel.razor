@@ -1,0 +1,107 @@
+﻿@using PRIME_UCR.Domain.Constants;
+
+<Loading IsLoading="@_isLoading">
+    @* State Log header with collapse option *@
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header justify-content-between" id="headingOne">
+                <h3 class="mb-0" data-toggle="tooltip" title="Presione sobre el título para desplegar o esconder la bitácora">
+                    <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Bitácora de estados <span class="oi oi-chevron-bottom px-2"></span>
+                    </a>
+                </h3>
+            </div>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <StateLog StatesLog="@StatesLog" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    @* State Last Change in incident with collapse option *@
+    @if (!String.IsNullOrEmpty(LastChange.UltimoCambio) && Incident.CurrentState != IncidentStates.Done.Nombre)
+    {
+        <div id="accordionTwo">
+            <div class="card">
+                <div class="card-header justify-content-between" id="headingTwo">
+                    <h3 class="mb-0" data-toggle="tooltip" title="Presione sobre el título para desplegar o esconder el último cambio">
+                        <a class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Último cambio realizado <span class="oi oi-chevron-bottom px-2"></span>
+                        </a>
+                    </h3>
+                </div>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <SummaryMessage Class="info" Values="@Values" Content="@Content" />
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+    <br />
+
+    @* State Panel *@
+
+    @if (Incident.CurrentState != IncidentStates.Done.Nombre)
+    {
+        <h3>Estados del Incidente</h3>
+
+        <StateProgressBar CurrentStateIndex="@currentStateIndex" />
+
+        @if (Incident.CurrentState == IncidentStates.Created.Nombre || Incident.CurrentState == IncidentStates.Rejected.Nombre)
+        {
+            @* Approve or Reject buttons *@
+            @if (Incident.CurrentState == IncidentStates.Created.Nombre)
+            {
+                @if (!showFeedBack)
+                {
+                    <div class="text-center mt-4">
+                        <button id="Aprobado" class="btn btn-primary" @onclick="@Approve">Cambiar a estado Aprobado</button>
+                        <button class="btn btn-outline-danger" @onclick="@showFeedbackInput">Rechazar incidente con retroalimentación</button>
+                    </div>
+                }
+            }
+            else if (Incident.CurrentState == IncidentStates.Rejected.Nombre)
+            {
+                <div class="text-center mt-4">
+                    <button id="Aprobado" class="btn btn-primary" @onclick="@Approve">Cambiar a estado Aprobado</button>
+                    <button disabled class="btn btn-outline-danger">Cambiar a estado Rechazado</button>
+                </div>
+            }
+        }
+        else
+        {
+            @* Change state buttons *@
+            <div class="text-center">
+                @if (PendingTasks.Count > 0)
+                {
+                    <button disabled type="submit" class="btn btn-disabled">Cambiar a estado @nextState</button>
+                }
+                else
+                {
+                    <button id="Cambiar" @onclick="@ChangeState" type="submit" class="btn btn-primary">Cambiar a estado @nextState</button>
+                }
+            </div>
+        }
+        @if (showFeedBack)
+        {
+            <EditForm Model="_feedBackmodel" OnValidSubmit="Reject">
+                <FluentValidationValidator />
+                <div class="text-center mt-4 ">
+                    <TextAreaInput Label="Retroalimentación incidente" @bind-Value="@_feedBackmodel.FeedBack" Rows="5" />
+                    @*<TextBox Label="Retroalimentación incidente" @bind-Value="@_feedBackmodel.FeedBack" />*@
+                    <button class="btn btn-primary">Cambiar a estado Rechazado</button>
+                    <button class="btn btn-secondaryOne" @onclick="@showFeedbackInput">Cancelar</button>
+                </div>
+            </EditForm>
+        }
+        <StatePendingTasks PendingTasks="@PendingTasks" Incident="@Incident" NextState="@nextState" />
+    }
+</Loading>

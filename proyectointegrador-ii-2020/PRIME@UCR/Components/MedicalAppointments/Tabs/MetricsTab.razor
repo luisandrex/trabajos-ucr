@@ -1,0 +1,41 @@
+﻿@inject IAppointmentService appointment_service;
+
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+
+@if (metrics_saved)
+{
+    <StatusMessage Message="Las mediciones se guardaron exitosamento" Class="success"></StatusMessage>
+}
+
+@if (metrics_updated)
+{
+    <StatusMessage Message="Las mediciones se actualizaron" Class="success"></StatusMessage>
+}
+@if (Summary != null)
+{
+    <SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+}
+
+<Loading IsLoading="MetricsForm == null">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <EditForm EditContext="MetricContext" OnValidSubmit="saveMetricData">
+                <TextBox @bind-Value="MetricsForm.Altura" Label="Estatura" />
+                <TextBox @bind-Value="MetricsForm.Peso" Label="Peso" />
+                <TextBox @bind-Value="MetricsForm.PresionSys" Label="Presión sistólica" />
+                <TextBox @bind-Value="MetricsForm.PresionDia" Label="Presión diastólica" />
+
+                @if (true)
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                }
+
+            </EditForm>
+        </div>
+    </div>
+</Loading>

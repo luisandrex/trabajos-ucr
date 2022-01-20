@@ -1,0 +1,32 @@
+﻿@page "/incidents/create"
+@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Domain.Constants 
+<!-- Only: (control center admin, medical technician coordinator) can create the incidents -->
+@attribute [HasPermission(AuthorizationPermissions.CanCreateIncidents)]
+
+<div class="jumbotron white-panel pb-3 pt-3 px-4">
+    <h2>Crear incidente</h2>
+    <Loading IsLoading="_modes == null">
+    <div class="col-lg-6 col-md-8">
+        <EditForm EditContext="_context" OnValidSubmit="@Create">
+            <FluentValidationValidator/>
+            <DropDownMenu Label="Modalidad" Data="_modes" @bind-Value="_model.Mode"
+                          TextProperty="Tipo"
+                          DefaultText="Seleccione una modalidad de traslado"/>
+            <DateTimePicker @bind-Value="@_model.EstimatedDateOfTransfer"
+                             Min="DateTime.Now"
+                             DateLabel="Fecha estimada de traslado"
+                             TimeLabel="Hora estimada de traslado"/>
+            @if (isFormValid)
+            {
+                <button type="submit" class="btn btn-primary">Crear</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-disabled" disabled>Crear</button>
+            }
+        </EditForm>
+    </div>
+    </Loading>
+</div>
+<br/>

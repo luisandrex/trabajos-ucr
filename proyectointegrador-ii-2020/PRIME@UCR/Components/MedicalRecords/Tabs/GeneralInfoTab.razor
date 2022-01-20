@@ -1,0 +1,20 @@
+﻿@using PRIME_UCR.Domain.Models.UserAdministration
+@using PRIME_UCR.Application.Services.UserAdministration
+
+<h3>Informacion general</h3>
+<ListItem Title="Fecha de creación del expediente" Text="@record.FechaCreacion.ToString()" />
+@if (LastAppointment != null)
+{
+    <ListItem Title="Fecha de última cita" Text="@LastAppointment.FechaHoraEstimada.ToString()" />
+}
+else
+{
+    <ListItem Title="Fecha de última cita" Text=""/>
+}
+<ListItem Title="Clínica destino" Text="@record.Clinica" />
+<ListItem Title="Cédula del paciente" Text="@record.Cedula" />
+<ListItem Title="Primer apellido" Text="@record.PrimerApellido" />
+<ListItem Title="Segundo apellido" Text="@record.SegundoApellido" />
+<ListItem Title="Nombre" Text="@record.Nombre" />
+<ul class="list-group">
+</ul>

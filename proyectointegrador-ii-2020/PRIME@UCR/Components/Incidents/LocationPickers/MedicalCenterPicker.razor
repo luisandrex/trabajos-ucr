@@ -1,0 +1,61 @@
+﻿@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Domain.Models.UserAdministration
+@using PRIME_UCR.Components.Incidents.IncidentDetails.Tabs
+@using Microsoft.EntityFrameworkCore
+
+<Loading IsLoading="_isLoading">
+    <EditForm EditContext="_context" OnValidSubmit="Submit">
+        <FluentValidationValidator />
+        <div class="row">
+            <div class="col-xl-6 col-lg-8">
+                @if (!ReadOnly) { 
+                    <DropDownMenu Id="Centro"
+                                  T="CentroMedico" Data="_medicalCenters"
+                                  Label="Centro médico"
+                                  DefaultText="Seleccione un centro médico"
+                                  TextProperty="Nombre"
+                                  Value="@Value.MedicalCenter"
+                                  ValueExpression="() => Value.MedicalCenter"
+                                  ValueChanged="@((CentroMedico mc) => OnChangeMedicalCenter(mc))"/>
+                    <DropDownMenu Id="Medico"
+                                  Data="_doctors" T="Médico"
+                                  DefaultText="Seleccione un/una médico/médica"
+                                  Label="@DoctorForLabel"
+                                  TextExpression="@((Médico m) => $"{m.Nombre} {m.PrimerApellido} {m.SegundoApellido}")"
+                                  @bind-Value="Value.Doctor"/>
+                }else{
+                    <TextBox Disabled="true" Required="false" @bind-Value="@Value.MedicalCenter.Nombre" Label="Centro Médico" />
+                    <TextBox Disabled="true" Required="false" @bind-Value="@DoctorFullName" Label="@DoctorForLabel" />
+                }
+            </div>
+        </div>
+        @if (IsOrigin)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @if (!ReadOnly)
+                    {
+                        <IntegerInput Label="Número de cama" @bind-Value="Value.BedNumber" Min="1"/>
+                    }else{
+                        <TextBox Disabled="true" Required="false" @bind-Value="@BedNumberText" Label="Médico en origen" />
+                    }
+                </div>
+            </div>
+        }
+        <div class="mt-2">
+            @if (!ReadOnly)
+            {
+                @if (!_saveButtonEnabled)
+                {
+                    <button id="Guardar" disabled type="submit" class="btn btn-disabled">Guardar</button>
+                    <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                }
+                else
+                {
+                    <button id="Guardar" type="submit" class="btn btn-primary">Guardar</button>
+                    <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                }
+            }
+        </div>
+    </EditForm>
+</Loading>

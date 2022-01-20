@@ -1,0 +1,26 @@
+﻿<div class="col-lg-3 mb-4">
+    @* Contains the list of existing checklists *@
+    <div class="container">
+        @* Header with button to create a new checklist *@
+        <h5>
+            Listas de chequeo:
+            <a class="btn btn-outline-primary" href='@string.Format("checklist/create")' id="a_LC2" data-toggle="tooltip" title="Crear Lista de chequeo">+</a>
+        </h5>
+        <div>
+            <ul class="nav nav-pills flex-column">
+                @if (Lists != null && Lists.Count() > 0)
+                {
+                    @foreach (var tempList in Lists)
+                    {
+                        <li class="nav-item mt-2">
+                            @* Navigation link for each checklist *@
+                            <NavLink href='@string.Format("checklist/{0}", @tempList.Id)' class="nav-link" id="a_LC4">
+                                @tempList.Nombre
+                            </NavLink>
+                        </li>
+                    }}
+            </ul>
+        </div>
+
+    </div>
+</div>

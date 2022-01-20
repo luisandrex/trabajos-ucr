@@ -1,0 +1,18 @@
+﻿@using PRIME_UCR.Components.Controls
+@using  PRIME_UCR.Domain.Models.UserAdministration
+
+@*This corresponds to the visual part of the profiles component, which shows the user a dropdown menu of the 
+    profiles that exist within the context of the application, so that the user can choose which profile to modify.
+*@
+<Loading IsLoading="ListProfiles == null">
+    <EditForm Model="Value">
+        <DropDownMenu Label="Seleccione el perfil que desea modificar"
+                      Data="ListProfiles"
+                      Value="selectedProfile"
+                      ValueChanged="((Perfil p)=> updateOtherTables(p))"
+                      ValueExpression="() => selectedProfile"
+                      TextProperty="NombrePerfil"
+                      DefaultText="Seleccione el perfil a modificar"
+                      UseValidation="false" />
+    </EditForm>
+</Loading>

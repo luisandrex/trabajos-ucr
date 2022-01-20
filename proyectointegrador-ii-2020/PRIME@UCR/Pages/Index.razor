@@ -1,0 +1,12 @@
+﻿@page "/"
+
+<AuthorizeView>
+    <Authorized>
+        <IndexComponent />
+    </Authorized>
+    <NotAuthorized>
+        <b>Debe de registrarse antes de acceder a la página.</b>
+        <br />
+        <IndexComponent />
+    </NotAuthorized>
+</AuthorizeView>

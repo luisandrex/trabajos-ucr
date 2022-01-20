@@ -1,0 +1,22 @@
+﻿@page "/checklist"
+@inherits CheckListPageBase
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants
+@using PRIME_UCR.Components.CheckLists.Plantillas
+
+@attribute [HasPermission(AuthorizationPermissions.CanCreateChecklist)]
+
+<link href="css/Checklist.css" rel="stylesheet" />
+
+
+<div id="All_LC">
+    <h2> Plantillas de listas de chequeo </h2>
+    @* Contains the list of existing checklists *@
+    <AllChecklist />
+</div>
+
+
+@* Floating button to create a new checklist *@
+<MatThemeProvider Theme="@AddButtonTheme">
+    <MatFAB Icon="@MatIconNames.Add" Class="app-fab--absolute" OnClick="@(_ => Redirect())" data-toggle="tooltip" title="Crear Lista de chequeo"></MatFAB>
+</MatThemeProvider>

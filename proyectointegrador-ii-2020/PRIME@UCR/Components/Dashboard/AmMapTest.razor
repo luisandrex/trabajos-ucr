@@ -1,0 +1,9 @@
+﻿@inject IJSRuntime JS
+<div id="mapGraphDiv"></div>
+
+@code {    
+    protected override async Task OnInitializedAsync()
+    {
+        await JS.InvokeVoidAsync("CreateMapGraph");
+    }
+}

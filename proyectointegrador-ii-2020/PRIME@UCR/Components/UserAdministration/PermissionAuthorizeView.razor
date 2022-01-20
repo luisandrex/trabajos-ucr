@@ -1,0 +1,11 @@
+﻿<AuthorizeView Policy="@Permission.ToString()">
+    <Authorized>
+        @ChildContent
+    </Authorized>
+    <NotAuthorized>
+        @if (ShowDeniedPermissionMessage) 
+        { 
+            <AuthenticationStateMessage Permission="@Permission"/>        
+        }
+    </NotAuthorized>     
+</AuthorizeView>

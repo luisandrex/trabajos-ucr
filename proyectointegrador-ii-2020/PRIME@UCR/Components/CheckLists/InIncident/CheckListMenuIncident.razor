@@ -1,0 +1,24 @@
+﻿@inherits CheckListMenuIncidentBase
+
+    @* Contains the list of existing checklists instanced in this incident*@
+    <div class="container">
+        <h5>
+            Listas de chequeo:
+        </h5>
+        <div>
+            <ul class="nav nav-pills flex-column">
+                @if (instancelists != null && instancelists.Count() > 0)
+                {
+                    @foreach (var tempList in instancelists)
+                    {
+                        <li class="nav-item mt-2">
+                            @* Navigation link for each checklist *@
+                            <NavLink href='@string.Format("incidents/{0}/{1}",@tempList.IncidentCod,@tempList.PlantillaId)' class="nav-link" id="a_LC4">
+                                @GetName2(tempList.PlantillaId)
+                            </NavLink>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>

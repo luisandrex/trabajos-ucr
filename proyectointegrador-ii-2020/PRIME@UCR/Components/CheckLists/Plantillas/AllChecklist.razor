@@ -1,0 +1,59 @@
+﻿@inherits AllChecklistBase
+@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.CheckLists;
+@using PRIME_UCR.Components.CheckLists.Plantillas
+@attribute [Authorize]
+<link href="css/Checklist.css" rel="stylesheet" />
+
+
+<div>
+    <Loading IsLoading="lists == null">
+        @if (lists.Count() == 0)
+        {
+        <p><em class="nav-link">No se ha creado ninguna lista, presione el boton + para crear una.</em></p> }
+        else
+        {
+        <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px; padding-top:10px;">
+            <EditForm Model="lists">
+                <Table TableItem="CheckList" Items="lists" PageSize="10" @ref="Table" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+                    <Column TableItem="CheckList" Title="Nombre" Field="@( x => x.Nombre)" Width="30%" Filterable="true" Sortable="true" DefaultSortColumn="true">
+                        <Template Context="tempList">
+                            <a href='@string.Format("checklist/{0}", @tempList.Id)'>
+                                @tempList.Nombre
+                            </a>
+                        </Template>
+                    </Column>
+                    <Column TableItem="CheckList" Title="Tipo" Field="@(x => x.Tipo)" Width="20%" Filterable="true" Sortable="true" DefaultSortColumn="true">
+                        <Template Context="tempList">
+                            <a>
+                                @tempList.Tipo
+                            </a>
+                        </Template>
+                    </Column>
+                    <Column TableItem="CheckList" Title="Descripción" Field="@(x => x.Descripcion)" Width="20%" Filterable="true" Sortable="true" DefaultSortColumn="true">
+                        <Template Context="tempList">
+                            <a>
+                                @tempList.Descripcion
+                            </a>
+                        </Template>
+                    </Column>
+                    <Column TableItem="CheckList" Title="Orden" Field="@(x => x.Orden)" Width="20%" Filterable="true" Sortable="true" DefaultSortColumn="true">
+                        <Template Context="tempList">
+                            <a>
+                                @tempList.Orden
+                            </a>
+                        </Template>
+                    </Column>
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No se encontraron plantillas de listas de chequeo
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" />
+                </Table>
+            </EditForm>
+        </div>
+        }
+        </Loading>
+</div>

@@ -1,0 +1,108 @@
+﻿@using PRIME_UCR.Components.Controls
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse5">Origen</a>
+                <i data-toggle="collapse" href="#collapse5" class="fa fa-toggle-down"></i>
+            </h4>
+        </div>
+        <div id="collapse5" class="panel-collapse collapse">
+
+            <EditForm Model="Value" OnValidSubmit="@Save">
+                <Loading IsLoading="@_isLoading">
+                    <DropDownMenu Data="@_dropdownValuesOrigin"
+                                  Label="Tipo de origen"
+                                  DefaultText="Sin filtro"
+                                  Value="Value._selectedOriginType"
+                                  ValueExpression="() => Value._selectedOriginType"
+                                  ValueChanged="@((string o) => OnOriginTypeChange(o))"
+                                  UseValidation="false"
+                                  Required="false" />
+
+                    @if (Value._selectedOriginType != null)
+                    {
+                        @if (Value._selectedOriginType == EnumUtils.GetDescription(OriginType.Household))
+                        {
+                            <Loading IsLoading="@_isLoading">
+                                <DropDownMenu Data="@_provinces"
+                                              Label="Provincia"
+                                              TextProperty="Nombre"
+                                              DefaultText="Sin filtro"
+                                              Value="@Value._selectedHouseholdOrigin.Province"
+                                              ValueChanged="@((Provincia p) => OnChangeProvince(p))"
+                                              ValueExpression="() => Value._selectedHouseholdOrigin.Province"
+                                              UseValidation="false"
+                                              Required="false" />
+                                @if (Value._selectedHouseholdOrigin.Province != null)
+                                {
+                                    <DropDownMenu Data="@_cantons"
+                                                  Label="Cantón"
+                                                  TextProperty="Nombre"
+                                                  DefaultText="Sin filtro"
+                                                  Value="@Value._selectedHouseholdOrigin.Canton"
+                                                  ValueExpression="() => Value._selectedHouseholdOrigin.Canton"
+                                                  ValueChanged="@((Canton c) => OnChangeCanton(c))"
+                                                  UseValidation="false"
+                                                  Required="false" />
+                                    if (Value._selectedHouseholdOrigin.Canton != null)
+                                    {
+                                        <DropDownMenu Data="@_districts"
+                                                      Label="Distrito"
+                                                      TextProperty="Nombre"
+                                                      DefaultText="Sin filtro"
+                                                      Value="@Value._selectedHouseholdOrigin.District"
+                                                      ValueExpression="() => Value._selectedHouseholdOrigin.District"
+                                                      ValueChanged="@((Distrito d) => OnChangeDistrict(d))"
+                                                      UseValidation="false"
+                                                      Required="false" />
+                                    }
+                                }
+                            </Loading>
+                        }
+                        else if (Value._selectedOriginType == EnumUtils.GetDescription(OriginType.International))
+                        {
+                            <Loading IsLoading="_isLoading">
+                                <DropDownMenu Data="@_countries"
+                                              Label="País"
+                                              TextProperty="Nombre"
+                                              DefaultText="Sin filtro"
+                                              Value="@Value._selectedInternationalOrigin.Country"
+                                              ValueExpression="() => Value._selectedInternationalOrigin.Country"
+                                              ValueChanged="@((Pais p) => OnChangeCountry(p))"
+                                              UseValidation="false"
+                                              Required="false" />
+                            </Loading>
+                        }
+                        else
+                        {
+                            <Loading IsLoading="_isLoading">
+                                <DropDownMenu Data="_medicalCenters"
+                                              Label="Centro médico"
+                                              DefaultText="Sin filtro"
+                                              TextProperty="Nombre"
+                                              Value="@Value._selectedMedicalCenterOrigin.MedicalCenter"
+                                              ValueExpression="() => Value._selectedMedicalCenterOrigin.MedicalCenter"
+                                              ValueChanged="@((CentroMedico mc) => OnChangeMedicalCenter(mc))"
+                                              UseValidation="false"
+                                              Required="false" />
+                            </Loading>
+                        }
+                    }
+                    <div class="text-left">
+                        @if (!_changesMade)
+                        {
+                            <button disabled type="submit" class="btn btn-primary">Aplicar</button>
+                            <button disabled class="btn btn-outline-secondary">Descartar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" data-toggle="collapse" href="#collapse5">Aplicar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapse5">Descartar</button>
+                        }
+                    </div>
+                </Loading>
+            </EditForm>
+         </div>
+    </div>
+</div>

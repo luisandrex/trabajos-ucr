@@ -1,0 +1,19 @@
+﻿@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Components.Incidents.LocationPickers
+
+<SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+<h3>Destino del incidente</h3>
+<br />
+<Loading IsLoading="_isLoading">
+    @if (Incident.Destination == null)
+    {
+        <StatusMessage Message="Este valor está pendiente para finalizar la creación del incidente." Class="warning"/>
+    }
+    <StatusMessage Message="@StatusMessage" Class="@StatusClass"/>
+    <MedicalCenterPicker Value="_medicalCenterModel"
+                         IsOrigin="@false"
+                         OnSave="@OnMedicalCenterSave"
+                         OnDiscard="LoadExistingValues"
+                         IsFirst="@(!(Destination is CentroUbicacion))" 
+                         ReadOnly="@ReadOnly"/>
+</Loading>

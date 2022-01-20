@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "speedy-insight-297203",
+  "private_key_id": "8c08dbefc2574fd8cdabb58fd566c9fe78e9738f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCVVWE0KGS54d8E\nGsNPbh0JEh27ONEvVnzDoSVGJwiGY82CXsJum5QJkZxxNLmqN4hLQ0A363rplpfb\ntzib6FmA2hM8MYJq0aNR/3W7miAT9ubp9B1g0i2l0y3fZQZl5SmxYdeYRqnVoaEr\nH+PVehLx8LycZr4o30xuTDqvZNI3sU93jrJEH4BKcPqUksHj1aPbyrPPfNuOPZuO\n5SNZTn3M99Plql8XEP/nhPJKoWF5q8KS10gIrZ/iWaVPv52vm7etlA7sSxwh1h2U\nASF0RE9WpOzKsfx+rFIG8Trfjvpv24SKkiua91I0ySK3w1CFM0PSsZaQZDqDDPa2\ntHeooNPhAgMBAAECggEAKK76jOmmS2foSKd750NiAKshU3TOtJ1U3z0jOQIAVhCR\nl/917AlRouu7GbJaFLANXyfCspliQoom9BJuBzedTrfavq7kT3KuknPM4N/D9nxw\n+3LooAySqBco67ALtq3glnVH9bHmqg9fJ68H9IxN5gEGeXuaOetf2LrG0CrhBI/M\nj1PqNNJK1G/asmhlpxlCipixjvjCxxfNYRIyyMxvmHQTp/S5bzdB+3xJjoAQVK8G\nc/4I8dZsiMGxhvrpo4QlSY9KLNz7v9110zri6Vn4QYACOk/yGapBdzXND1Rbdoc3\nmRaBA5UgM68eo/IrwhtxfWzNkPVDR00cVWXCMDbcYwKBgQDQChS1WwiAU6a8zagY\n573ymIFotxURpcoevfpq4sl9gdAcStSMeF0/Cm4mjighIjJU2uBJ8EpCf6pWNmbL\nsb58Yunu5jQFLWLTsK3QMHU7FjfoIn5fu34QQKSFKwH7GdlaH0C6VQqXDNDNvNHR\navw1GKCmXs2y1gYjF1WcRNuEUwKBgQC3wqNeBOuPcxH5F/nSYQM+h/+WBE5T6h7Q\nbj97gSXpiIxrYC/Wyw3sSHwhQk3PKteBl0uq0Gmjucke5h/3ybgy9VDWlsJzOuP5\n80JeJO73LnpXmws8yeLForkSzQNGim0RpU6lI9r4H+LKm/hnj/ie64dK22lC2ht4\nu6peEy7AewKBgFrjjJiO5O/rm/TwhHgdBsduCVuOYQ4MuHkl1rnLyuuiQyGZL7MP\nAu3/yI/fm3ieUA7ycPrcmBTlYa24psBnLyl4rWtJ94Ari/mgPs+t3Amsc1BfgYah\niznehAIKABuL94GAFe9SKAZF+xNnYuNzMiygTc9hq8xt5NB/6U8UZjMxAoGBAJah\nzH0Tl20drIv+JWFY+OnXXaHBoduTvPKqjQtWkJdgwYp7bHusM5uOx4IT8ehye/nU\n5cf907rMXpsflPDvwDi1czCUoI0IpzyLNcoqiGDDDrKle463B1duzjslJxw5+LJQ\nSamBPMvMh4ICXJu4HttWwq6QMTcFxyMu4rb/DoHlAoGBAMW1qxkG64n0uj/LHkN+\nRNuYKQAcmDiWTzqez0o2Px0mUmlGB45eqFNYjSNfZ7PikxmizX+KH9Pxjnc4bq6c\nr5NVKfTJcq9Mg8D1rPy0ndk65V61nJ1Z10IyjWC8q0s8f46iIPTAZ6nFXpSUc9aj\n725aSW5cmtDnvy6XNJxp/lC8\n-----END PRIVATE KEY-----\n",
+  "client_email": "ucradmin@speedy-insight-297203.iam.gserviceaccount.com",
+  "client_id": "103845157568613857933",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ucradmin%40speedy-insight-297203.iam.gserviceaccount.com"
+}

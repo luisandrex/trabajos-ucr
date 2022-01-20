@@ -1,0 +1,14 @@
+﻿@page "/create-medical-record"
+@using PRIME_UCR.Domain.Models
+@using PRIME_UCR.Domain.Models.MedicalRecords
+@using PRIME_UCR.Components.MedicalRecords
+@using PRIME_UCR.Application.Implementations.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeAllMedicalRecords)]
+@inject PRIME_UCR.Application.Services.MedicalRecords.IMedicalRecordService medical_record_service
+
+
+<h1>Crear Expediente Paciente</h1>
+
+<MedicalRecordForm RecordModel="recordModel" Submit_msg="Crear Expediente"
+                   OnValidSubmit="@create_medical_record"></MedicalRecordForm>

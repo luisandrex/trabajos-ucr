@@ -1,0 +1,45 @@
+﻿@page "/medical-appointment/{Id}"
+@using PRIME_UCR.Components.MedicalAppointments
+@inject IAppointmentService appointment_service
+@using PRIME_UCR.Application.Implementations.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeMedicalRecordsOfHisPatients)]
+<h1>Detalles de la Cita</h1>
+<hr />
+
+
+@if (exists)
+{
+<Loading IsLoading="appointment == null">
+        <div class="row">
+            <div class="col-lg-2 mb-4">
+                <TabMenu Tabs="_tabs" DefaultTab="DefaultTab" IsVertical="true" @bind-Value="_activeTab" />
+            </div>
+            @if (_activeTab != MADetailsTab.Recetas)
+            {
+                @if (_activeTab != MADetailsTab.Metricas)
+                {
+                    <div class="col">
+                        <MAActiveTab Active="@_activeTab" med_appointment_id="@id" id="@id" MedAppointment="@appointment" Appointment="@appoint"></MAActiveTab>
+                    </div>
+                }
+                else
+                {
+                    @if (appoint != null)
+                    {
+                        <MAActiveTab Active="@_activeTab" med_appointment_id="@id" id="@id" appointment_id="appoint.Id" MedAppointment="@appointment" Appointment="@appoint"></MAActiveTab>
+                    }
+                }
+            }
+            else
+            {
+                <MAActiveTab Active="@_activeTab" med_appointment_id="@id" id="@id" MedAppointment="@appointment" Appointment="@appoint"></MAActiveTab>
+            }
+        </div>
+</Loading>
+}
+else
+{
+    <h4 class="text-danger">No se encontró el expediente solicitado.</h4>
+}
+<br />

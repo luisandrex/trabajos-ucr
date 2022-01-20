@@ -1,0 +1,23 @@
+﻿@inherits GenericInput<DateTime?>
+
+<div class="form-group">
+    @if (!String.IsNullOrEmpty(Label))
+    {
+        @if (Required)
+        {
+            <label>@Label<strong class="text-danger">*</strong></label>
+        }
+        else
+        {
+            <label>@Label</label>
+        }
+    }
+    <input class="@($"form-control {ValidationCssClass}")"
+           value="@Value?.ToString("yyyy-MM-dd")"
+           type="@Type"
+           min="@Min?.ToString("yyyy-MM-dd")"
+           max="@Max?.ToString("yyyy-MM-dd")"
+           disabled="@Disabled"
+           @onchange="OnChangeEvent"/>
+    <ValidationMessage For="ValueExpression" />
+</div>

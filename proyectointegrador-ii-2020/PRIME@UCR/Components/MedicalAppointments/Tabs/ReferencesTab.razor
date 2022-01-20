@@ -1,0 +1,104 @@
+﻿@using PRIME_UCR.Domain.Models.Appointments
+@using PRIME_UCR.Domain.Models.UserAdministration
+@using BlazorTable
+@inject IAppointmentService appointment_service
+
+<h3>Referencias Médicas</h3>
+
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+
+@if (reference_done)
+{
+    <StatusMessage Message="Referencia realizada exitosamente" Class="success"></StatusMessage>
+}
+
+
+@if (unfinished_data)
+{
+    <StatusMessage Message="Debe ingresar los datos obligatorios para crear la referencia" Class="warning"></StatusMessage>
+}
+
+@if (Summary != null)
+{
+    <SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+}
+
+<Loading IsLoading="_context == null">
+    <EditForm EditContext="_context" OnValidSubmit="scheduleAppo">
+        <FluentValidationValidator />
+
+        <div class="row">
+            <div class="col-xl-8 col-lg-10">
+                <DropDownMenu T="EspecialidadMedica" Data="EspecialidadesMedicas"
+                              Label="Especialidad Médica"
+                              TextProperty="Nombre"
+                              DefaultText="Seleccione una especialidad médica"
+                              Required="true"
+                              Disabled="false"
+                              Value="@selected_specialty"
+                              ValueExpression="() => selected_specialty"
+                              ValueChanged="@((EspecialidadMedica e) => OnChangeSpecialty(e))" />
+            </div>
+        </div>
+
+        @if (already_selected == true)
+        {
+            <Loading IsLoading="Doctors == null">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-10">
+                        <DropDownMenu T="Persona" Data="Doctors"
+                                      Label="@get_msgname()"
+                                      TextProperty="NombreCompleto"
+                                      DefaultText="Seleccione un médico especialista"
+                                      Required="true"
+                                      Disabled="false"
+                                      @bind-Value="@selected_doctor" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-xl-8 col-lg-10">
+                        <label>Fecha de la cita<strong class="text-danger">*</strong></label>
+                        <InputDate id="FechaHoraCreacion" @bind-Value="@date" class="form-control" min="@(minTime.ToString("yyyy-MM-dd"))"></InputDate>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xl-8 col-lg-10">
+                        <label>Ingrese la hora de la cita</label>
+                        <input type="time" @bind-value="@date" />
+                    </div>
+                </div>
+
+                @if (true)
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                }
+</Loading>
+        }
+    </EditForm>
+</Loading>
+
+
+<Loading IsLoading="addingreference">
+    <Table TableItem="ReferenceModel" Items="references" PageSize="7" @ref="ReferenceModelModel" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+        <Column TableItem="ReferenceModel" Title="Fecha Cita" Field="@(x => x.appointment.FechaHoraEstimada)" Width="20%">
+        </Column>
+
+        <Column TableItem="ReferenceModel" Title="Especialidad" Field="@(x => x.reference.Especialidad)" Width="20%">
+        </Column>
+
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron referencias asociadas a la cita.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+</Loading>

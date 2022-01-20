@@ -1,0 +1,11 @@
+﻿<Loading IsLoading="@(_isAuthorized == null)">
+    @if (_isAuthorized == true)
+    {
+        @ChildContent
+    }
+    else
+    {
+        <StatusMessage Message="Usted no puede acceder a esta información porque no está asignado a este incidente."
+                       Class="danger" />
+    }
+</Loading>

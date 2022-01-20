@@ -1,0 +1,50 @@
+﻿@page "/incidents/{Code}"
+@page "/incidents/{Code}/{StartingTab}"
+@using PRIME_UCR.Components.Incidents.IncidentDetails.Tabs
+@using PRIME_UCR.Components.Incidents.IncidentDetails
+@using PRIME_UCR.Components.Incidents
+@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeBasicDetailsOfIncidents)]
+
+@inject NavigationManager NavigationManager
+@inject IIncidentService IncidentService
+
+<h2>Administración del incidente</h2>
+<hr />
+@if (_exists)
+{
+<Loading IsLoading="_incidentModel == null">
+    <div class="container-fluid h-100 w-100">
+        <div class="row wrapper flex-column flex-md-row h-100">
+            @* Configuration for menu hamburguer in resizing *@
+            <aside class="col-xs-0 col-sm-0 col-md-0 col-xl-2 col-lg-2 p-0 mb-4 h-100 flex-shrink-1">
+                <nav class="navbar navbar-light text-black navbar-expand-md
+                            align-items-start flex-md-column flex-row">
+                    <a class="mb-2 navbar-toggler sidebar-cursor text-center" data-toggle="collapse" data-target=".submenu-show">
+                        <span class="oi oi-menu" aria-hidden="true"></span>
+                    </a>
+                    <div class="col-12 submenu-show collapse navbar-collapse">
+                        <TabMenu Tabs="_tabs" DefaultTab="DefaultTab" IsVertical="true"
+                                 TooltipText="Campo pendiente"
+                                 @bind-Value="_activeTab" />
+                    </div>
+                </nav>
+            </aside>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-xl-10 col-lg-10">
+                <div class="jumbotron white-panel">
+                    <CascadingValue Value="@this">
+                        <ActiveTab Active="@_activeTab" Incident="_incidentModel" OnSave="@Save"
+                                   StatusMessage="@_statusMessage" StatusClass="@_statusClass" />
+                    </CascadingValue>
+                </div>
+            </div>
+        </div>
+    </div>
+</Loading>
+}
+else
+{
+    <h4 class="text-danger">No se encontró el incidente solicitado.</h4>
+}
+<br/>

@@ -1,0 +1,32 @@
+﻿<CascadingValue Value="@this">
+    @ChildContent
+    @if (_items.Count > 0)
+    {
+        <div class="@($"alert alert-{Class} container")" role="alert">
+            @foreach (var item in _items)
+            {
+                <div class="row">
+                    <div class="p-2">
+                        <b>@item.Header</b>:&nbsp; @item.Message
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    private List<AlertRowTemplate> _items = new List<AlertRowTemplate>();
+
+    public void AddAlertRow(AlertRowTemplate row)
+    {
+        row.Parent = this;
+        _items.Add(row);
+        StateHasChanged();
+    }
+}

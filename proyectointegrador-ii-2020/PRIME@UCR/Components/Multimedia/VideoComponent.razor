@@ -1,0 +1,66 @@
+﻿@inject IJSRuntime JS
+
+<div class="rt-container">
+
+    <div class="card" style="padding: 20px">
+        <h2 class="rt-align">Video</h2>
+        <hr />
+
+        <MultimediaAlert Message="AlertMessage"></MultimediaAlert>
+        <MultimediaTitleComponent Title="@fileName" Disabled="true"></MultimediaTitleComponent>
+
+        @* Video Feed *@
+        <video class="rt-box" autoplay muted @ref="videoPreview"></video>
+        @* Video Preview *@
+        <video class="rt-box" controls @ref="recordedVideo"></video>
+
+        @* Button Row *@
+        <div class="row" style="margin-top: 20px">
+            @* Open/Close Camera *@
+            <div class="col">
+                <button type="button" class="btn btn-primary rt-button"
+                        @onclick="HandleOpenCloseClick"
+                        @ref="closeButton">
+                    @openCloseButtonText
+                </button>
+            </div>
+
+            @* Record/Stop Button *@
+            <div class="col">
+                @* Record *@
+                <button type="button" class="btn btn-primary rt-button" 
+                        disabled="@cameraClose" 
+                        @onclick="OnRecordPressed"
+                        @ref="startButton">
+                    Grabar
+                </button>
+                @* Stop *@
+                <button class="btn btn-danger rt-button" 
+                        disabled="@cameraClose" 
+                        @onclick="OnStopPressed"
+                        @ref="stopButton">
+                    Detener
+                </button>
+            </div>
+
+            @* Download Button *@
+            <div class="col">
+                <button class="btn btn-primary rt-button" disabled @ref="mockDownloadButton">Descargar</button>
+                <div class="btn btn-primary rt-button hidden" @ref="downloadButtonContainer">
+                    <a style="color: white;" @ref="downloadButton">
+                        Descargar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @* Exit Button *@
+        <div class="row" style="margin-top: 20px">
+            <div class="col">
+                <button class="btn btn-danger rt-button" @onclick="OnClose">Salir</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

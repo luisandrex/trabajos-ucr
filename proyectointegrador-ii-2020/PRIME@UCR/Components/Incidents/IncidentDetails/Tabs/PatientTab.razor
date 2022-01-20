@@ -1,0 +1,118 @@
+@using PRIME_UCR.Components.Controls
+@using ChartJs.Blazor.ChartJS.Common.Handlers.OnClickHandler
+@using PRIME_UCR.Domain.Models.UserAdministration
+@using PRIME_UCR.Domain.Constants
+
+<SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+<h3>Paciente por trasladar</h3>
+<br />
+<Loading IsLoading="_isLoading">
+    <AuthorizeIfAssigned IncidentCode="@Incident.Code">
+        @if (Incident.MedicalRecord == null)
+        {
+            <StatusMessage Message="Aún no se ha asignado paciente alguno, por lo que este valor está pendiente para finalizar la creación del incidente." Class="warning"/>
+        }
+        <StatusMessage Message="@_statusMessage" Class="success"/>
+        @if (_model.Patient != null)
+        {
+            @switch (_patientStatus)
+            {
+                case PatientStatus.PatientExists:
+                    <StatusMessage Message="El paciente existe y tiene expediente. Puede asignarlo a este incidente presionando el botón de guardar." Class="primary"/>
+                    break;
+                case PatientStatus.PersonExists:
+                    <StatusMessage Message="La persona está registrada en el sistema, pero no tiene un expediente. Puede crear el expediente y asignarlo a este incidente presionando el botón de guardar." Class="primary"/>
+                    break;
+                case PatientStatus.NewPerson:
+                    <StatusMessage Message="Esta cédula no está registrada en el sistema. Digite los datos en el formulario. Presione el botón de guardar para crear al paciente con su expediente y asignarlo a este incidente." Class="primary"/>
+                    break;
+                case PatientStatus.PatientUnchanged:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                <EditForm EditContext="_context">
+                    <AuthorizeView Policy="@AuthorizationPermissions.CanEditMedicalInfoOfIncidentsPatient.ToString()" Context="ChildContentContext">
+                        <Authorized>
+                            <FluentValidationValidator/>
+                            @if (!ReadOnly)
+                            {
+                                <TextBox Id="Cedula"
+                                         Label="Cédula del paciente"
+                                         Value="@_model.CedPaciente"
+                                         ValueExpression="() => _model.CedPaciente"
+                                         ValueChanged="(string s) => OnIdChange(s)"/>
+                            }else{
+                                <TextBox Disabled="true" Required="false" @bind-Value="@_model.CedPaciente" Label="Cédula del Paciente"/>
+                            }
+                            @if (_model.Patient == null)
+                            {
+                                <div class="mt-2">
+                                    <button class="btn btn-primary">Guardar</button>
+                                    <button class="btn btn-outline-secondary" @onclick="LoadExistingValues" @onclick:preventDefault>Descartar</button>
+                                </div>
+                            }
+                        </Authorized>
+                        <NotAuthorized>
+                            @if (_model.Patient != null)
+                            {
+                                <TextBox Id="Cedula" Disabled="IsReadOnly()" @bind-Value="@_model.CedPaciente" Label="Cédula del Paciente"/>
+                            }
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </EditForm>
+                @if (_model.Patient != null)
+                {
+                    <EditForm EditContext="_patientContext" OnValidSubmit="Submit">
+                        <FluentValidationValidator/>
+                        <TextBox Id="Nombre" Disabled="IsReadOnly()" Required="!ReadOnly" @bind-Value="_model.Patient.Nombre" Label="Nombre"/>
+                        <TextBox Id="PrimerAp" Disabled="IsReadOnly()" Required=!ReadOnly @bind-Value="_model.Patient.PrimerApellido" Label="Primer apellido"/>
+                        @if (!IsReadOnly() || !String.IsNullOrEmpty(_model.Patient.SegundoApellido))
+                        {
+                            <TextBox Disabled="IsReadOnly()" Required="false" @bind-Value="_model.Patient.SegundoApellido" Label="Segundo apellido"/>
+                        }
+                        @if (!IsReadOnly() || _model.Patient.FechaNacimiento != null)
+                        {
+                            <DatePicker Disabled="IsReadOnly()"
+                                        @bind-Value="_model.Patient.FechaNacimiento"
+                                        Label="Fecha de nacimiento"
+                                        Max="@DateTime.Today"
+                                        Min="@DateTime.Today.AddYears(-120)"
+                                        Required="false"/>
+                        }
+                        @if (!IsReadOnly() || _model.Patient.Sexo != null)
+                        {
+                            <DropDownMenu T="Gender?" Data="_genders"
+                                          Label="Sexo"
+                                          DefaultText="Seleccione un sexo"
+                                          TextExpression="@((Gender? g) => EnumUtils.GetDescription(g))"
+                                          Required="false"
+                                          Disabled="@IsReadOnly()"
+                                          @bind-Value="SelectedGender"/>
+                        }
+                        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanEditMedicalInfoOfIncidentsPatient" ShowDeniedPermissionMessage=false>
+                            <div class="mt-4">
+                                @if (!ReadOnly)
+                                {
+                                    @if (_patientStatus == PatientStatus.PatientUnchanged)
+                                    {
+                                        <button id="Guardar" disabled class="btn btn-disabled">Guardar</button>
+                                        <button disabled class="btn btn-secondaryOne">Descartar</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="Guardar" class="btn btn-primary">Guardar</button>
+                                        <button class="btn btn-secondaryOne" @onclick="LoadExistingValues" @onclick:preventDefault>Descartar</button>
+                                    }
+                                }
+                            </div>
+                        </PermissionAuthorizeView>
+                    </EditForm>
+                }
+            </div>
+        </div>
+    </AuthorizeIfAssigned>
+</Loading>

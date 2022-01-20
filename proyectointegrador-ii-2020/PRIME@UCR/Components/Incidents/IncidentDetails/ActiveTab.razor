@@ -1,0 +1,55 @@
+@using PRIME_UCR.Components.Incidents.IncidentDetails.Tabs
+@using PRIME_UCR.Components.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@using PRIME_UCR.Application.DTOs.UserAdministration
+
+<div class="container-fluid">
+    @if (Active == DetailsTab.Info)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanSeeBasicDetailsOfIncidents">
+            <InfoTab DetailsModel="@Incident" CurrentUser="@CurrentUser" OnSave="@Save"/>
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Origin)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanEditBasicDetailsOfIncident">
+            <OriginTab Incident="@Incident" OnSave="@SaveOrigin"
+                       StatusMessage="@StatusMessage" StatusClass="@StatusClass"/>
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Destination)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanEditBasicDetailsOfIncident">
+            <DestinationTab Incident="@Incident" OnSave="@SaveDestination"
+                            StatusMessage="@StatusMessage" StatusClass="@StatusClass"/>
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Patient)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanSeeInfoOfIncidentsPatient">
+            <PatientTab Incident="@Incident" OnSave="@SavePatient"/>
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Multimedia)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanManageIncidentMultimediaContent">
+            <MultimediaTab Incident="@Incident"/>
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Assignment)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanAssignIncidents">
+            <Assignment Incident="@Incident" OnSave="@SaveAssignment" />
+        </PermissionAuthorizeView>
+    }
+    else if (Active == DetailsTab.Checklist)
+    {
+        <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanManageIncidentChecklists">
+            <CheckList Incident="@Incident"/>
+        </PermissionAuthorizeView>
+    }
+    else
+    {
+        <h4 class="text-danger">Not found</h4>
+    }
+</div>

@@ -1,0 +1,31 @@
+﻿@if (Content.Count == Values.Count && Content.Count > 0)
+{
+    <div class="@($"alert alert-{Class}") container" role="alert">
+        <div class="row">
+            @for (var it = 0; it < Content.Count; ++it)
+            {
+                <div class="col text-center">
+                    <b>@Content[it]</b> @Values[it]
+                    @if (Values[it].Trim() == "Finalizado")
+                    {
+                        <span data-toggle="tooltip" title="Incidente finalizado. No es posible editar información."
+                        class="badge badge-primary badge-pill badge-text">!</span>
+                    }
+                    <br />
+
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public List<string> Values { get; set; }
+
+    [Parameter]
+    public List<string> Content { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+}

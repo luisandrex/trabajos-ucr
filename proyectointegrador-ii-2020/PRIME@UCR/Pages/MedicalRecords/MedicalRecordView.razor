@@ -1,0 +1,54 @@
+﻿@page "/medicalrecord/{Id}"
+@page "/medicalrecord/{Id}/{state}"
+@using PRIME_UCR.Components.MedicalRecords.Tabs
+@using PRIME_UCR.Components.MedicalRecords
+@using PRIME_UCR.Components.Controls
+@attribute [Authorize]
+@inject IMedicalRecordService MedicalRecordService
+@inject IMedicalBackgroundService MedicalBackgroundService
+@inject IAlergyService AllergyService
+@inject IAppointmentService AppointmentService
+@inject IChronicConditionService ChronicConditionService
+@inject NavigationManager NavigationManager
+@using PRIME_UCR.Application.Implementations.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeMedicalRecordsOfHisPatients)]
+<h1>Detalles del expediente</h1>
+<hr />
+
+@if (new_record)
+{
+    <StatusMessage Message="Expediente registrado exitosamente" Class="success"></StatusMessage>
+}
+
+@if (exists)
+{
+    <Loading IsLoading="viewModel == null">
+        @if (Summary != null)
+        {
+            <SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+        }
+        <div class="row">
+            <div class="col-lg-2 mb-4">
+                <TabMenu Tabs="_tabs" DefaultTab="DefaultTab" IsVertical="true" @bind-Value="_activeTab" />
+            </div>
+            <div class="col">
+                <ActiveTab Active="@_activeTab" Expediente="@viewModel"
+                           MedicalRecord="@medical_record_with_details"
+                           Alergias="@alergias"
+                           Antecedentes="@antecedentes"
+                           PadecimientosCronicos="@PadecimientosCronicos"
+                           ListaAntecedentes="@ListaAntecedentes"
+                           ListaAlergia="@ListaAlergias"
+                           ListaPadecimiento="@ListaPadecimiento"
+                           UltimaCita="@lastAppointment" />
+            </div>
+        </div>
+    </Loading>
+}
+else
+{
+    <h4 class="text-danger">No se encontró el expediente solicitado.</h4>
+}
+<br />
+

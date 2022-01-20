@@ -1,0 +1,70 @@
+﻿@using PRIME_UCR.Application.Services.Multimedia
+@inject IJSRuntime JS
+@inject IEncryptionService encrypt_service
+<!--POPUP VER-->
+<!-- The Modal -->
+@if (Show)
+{
+    <div class="modal-mc">
+
+        <!-- The Close Button -->
+        <div class="close" @onclick="CloseImageView">x</div>
+
+        @if (ShowCamera)
+        {
+            <CameraComponent MultimediaModal="this" ApCode="@ApCode"></CameraComponent>
+        }
+        @if (ShowMicrophone)
+        {
+            <MicrophoneComponent MultimediaModal="this" ApCode="@ApCode"></MicrophoneComponent>
+        }
+        @if (ShowImage)
+        {
+            string imgSrc = getSrc();
+            string captionName = getName();
+         
+            <img src=@imgSrc class="modal-content-image-mc">
+            <div id="caption">@captionName</div>
+        }
+        @if (ShowAudio)
+        {
+            string path = getAudio();
+            <div style="padding: 40%; padding-top: 20%;">
+                <audio controls="controls">
+                    <source src=@path type="audio/mpeg">
+                </audio>
+            </div>
+        }
+        @if (ShowVideo)
+        {
+            string vid = getVideo();
+            <div style="padding-top: 10%; padding-right: 25%;padding-left: 25%;">
+                <video width="640" height="480" controls="controls">
+                    <source src=@vid type="video/mp4">
+                </video>
+            </div>
+        }
+        @if (ShowVideoComponent)
+        {
+            <VideoComponent MultimediaModal="this" ApCode="@ApCode"></VideoComponent>
+        }
+        @if (ShowText)
+        {
+            <TextComponent OnFileUpload="OnFileUpload"
+                           MultimediaContent="MContent"
+                           ApCode="@ApCode"
+                           ActionName="@ActionName"
+                           CallingPlace="@CallingPlace"
+                           CheckListName="@CheckListName"
+                           CheckListItemName="@CheckListItemName"
+                           MultimediaModal="this"></TextComponent>
+        }
+
+    </div>
+}
+@if (ShowPDF)
+{
+    getPDF();
+}
+
+

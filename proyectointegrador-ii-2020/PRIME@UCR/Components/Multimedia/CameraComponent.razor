@@ -1,0 +1,69 @@
+﻿@inject IJSRuntime JS
+
+<div class="rt-container">
+
+    <div class="card" style="padding: 20px">
+        <h2 class="rt-align">Cámara</h2>
+        <hr />
+
+        <MultimediaAlert Message="AlertMessage"></MultimediaAlert>
+        <MultimediaTitleComponent Title="@fileName" Disabled="true"></MultimediaTitleComponent>
+
+        @* Video Preview *@
+        <video autoplay class="@videoClass" @ref=videoElement></video>
+        @* Photograph Preview *@
+        <canvas class="@canvasClass" @ref=canvasElement></canvas>
+
+        @* Button Row *@
+        <div class="row" style="margin-top: 20px">
+
+            @* Open/Close Camera *@
+            <div class="col">
+                <button class="btn btn-primary rt-button" @onclick="HandleOpenCloseButtonClick">
+                    @OpenCloseButtonText()
+                </button>
+            </div>
+            @* Take Photograph/Cancel Button *@
+            <div class="col">
+                <button class="@tpButtonClass"
+                        disabled="@cameraClose"
+                        @onclick="TakePhotograph">
+                    Tomar fotografía
+                </button>
+                <button class="@cancelButtonClass"
+                        disabled="@photoNotTaken"
+                        @onclick="CancelPhotograph">
+                    Volver a tomar
+                </button>
+            </div>
+
+            @* Download Button *@
+            <div class="col">
+                @if (photoNotTaken)
+                {
+                    <button class="btn btn-primary rt-button" disabled>Descargar</button>
+                }
+                <div class="@downloadLinkClass">
+                    <a style="color: white;" @ref="downloadLinkRef">
+                        Descargar
+                    </a>
+                </div>
+                @*<button class="btn btn-primary rt-button" disabled="@notValidSave">Descargar</button>*@
+                
+            </div>
+
+        </div>
+
+        @* Exit Button *@
+        <div class="row" style="margin-top: 20px">
+            <div class="col">
+                <button class="btn btn-danger rt-button" @onclick="OnClose">Salir</button>
+            </div>
+        </div>
+
+    </div>
+
+    @* Image to store photograph *@
+    <img src="" class="hidden" @ref=imageElement />
+
+</div>

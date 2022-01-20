@@ -1,0 +1,33 @@
+﻿@using PRIME_UCR.Components.Controls
+@using Microsoft.EntityFrameworkCore
+@implements IDisposable
+
+<Loading IsLoading="_isLoading">
+    <EditForm EditContext="_context" OnValidSubmit="Submit">
+        <FluentValidationValidator />
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                @if (!ReadOnly)
+                {
+                    <DropDownMenu Id="Pais" Data="@_values" T="Pais" Label="País" TextProperty="Nombre"
+                                  DefaultText="Seleccione un país"
+                                  @bind-Value="@Value.Country"/>
+                    <div class="mt-4">
+                        @if (!_saveButtonEnabled)
+                        {
+                            <button id="Guardar" disabled type="submit" class="btn btn-disabled">Guardar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                        }
+                        else
+                        {
+                            <button id="Guardar"  type="submit" class="btn btn-primary">Guardar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                        }
+                    </div>
+                }else{
+                    <TextBox Disabled="true" Required="false" @bind-Value="@Value.Country.Nombre" Label="Pais" />
+                }
+            </div>
+        </div>
+    </EditForm>
+</Loading>

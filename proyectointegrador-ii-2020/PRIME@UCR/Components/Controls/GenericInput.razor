@@ -1,0 +1,23 @@
+﻿@typeparam TValue
+@inherits InputBase<TValue>
+
+<div class="form-group">
+    @if (!String.IsNullOrEmpty(Label))
+    {
+        @if (Required)
+        {
+            <label>@Label<strong class="text-danger">*</strong></label>
+        }
+        else
+        {
+            <label>@Label</label>
+        }
+    }
+    <input id="@Id"
+           class="@($"form-control {ValidationCssClass}")"
+           value="@Value"
+           type="@Type"
+           disabled="@Disabled"
+           @onchange="OnChangeEvent"/>
+    <ValidationMessage For="ValueExpression" />
+</div>

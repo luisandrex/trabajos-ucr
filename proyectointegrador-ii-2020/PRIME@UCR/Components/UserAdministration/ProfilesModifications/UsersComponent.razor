@@ -1,0 +1,30 @@
+﻿@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.UserAdministration
+
+@*This corresponds to the visual part of the users component, which shows the user a list of the users
+    assigned to each profile in a table, with a checkbox used to assing or unassing users, the username and the id of each user.
+*@
+
+<Loading IsLoading="Value.UserLists == null">
+    <EditForm Model="Value">
+        <Table TableItem="Usuario" Items="ListUsers" PageSize="12">
+            <Column TableItem="Usuario" Title="" Field="@(x => x.CedPersona)" Width="1%">
+                <Template Context="checkbox">
+                    <center>
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="customCheck @checkbox.CedPersona" checked="@Value.CheckedUsers[ (Value.CheckedUsers.FindIndex(p=> p.Item1 == checkbox.Id)) ].Item2" @onchange="((ChangeEventArgs c) => update_profile(checkbox.Id,c))" />
+                            <label class="custom-control-label" for="customCheck @checkbox.CedPersona"></label>
+                        </div>
+                    </center>
+                </Template>
+            </Column>
+
+            <Column TableItem="Usuario" Title="Nombre de usuario" Field="@(x => x.Persona.NombreCompleto)" Width="30%" />
+            <Column TableItem="Usuario" Title="Correo electrónico" Field="@(x => x.UserName)" Width="20%" />
+            @**@
+
+            <Pager ShowPageNumber="true" ShowTotalCount="true" ShowPageSizes="true" />
+        </Table>
+    </EditForm>
+</Loading>

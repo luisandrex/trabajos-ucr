@@ -1,0 +1,74 @@
+﻿@using PRIME_UCR.Domain.Constants;
+
+<br />
+<br />
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Siguiente estado</th>
+
+                    @if (PendingTasks.Count > 0)
+                    {
+                        @if (Incident.CurrentState == IncidentStates.Rejected.Nombre || Incident.CurrentState == IncidentStates.Created.Nombre)
+                        {
+                            @* Case where incident is waiting for a cordinator to review info. *@
+                            <th scope="col">
+                                Tareas pendientes
+                                <span data-toggle="tooltip" title="Esperando la revisión de un coordinador">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock-fill clock-state" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                                    </svg>
+                                </span>
+                            </th>
+                        }
+                        else
+                        {
+                            @* Case where there are pending taks to change state. *@
+                            <th scope="col">
+                                Tareas pendientes <span data-toggle="tooltip" title="Hay tareas pendientes antes de poder cambiar de estado"
+                                                        class="badge badge-primary badge-pill badge-text">!</span>
+                            </th>
+                        }
+                    }
+                    else
+                    {
+                        @* Case where incident is ready to change state. *@
+                        <th scope="col">
+                            Tareas pendientes <span data-toggle="tooltip" title="El incidente está listo para cambiar de estado"
+                                                    class="badge badge-success badge-pill badge-text">✓</span>
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@NextState</td>
+                    @if (PendingTasks != null && PendingTasks.Count > 0)
+                    {
+                        <td>
+                            <ul class="list-group container">
+                                @foreach (var task in PendingTasks)
+                                {
+                                    <li class="bg-task d-flex flex-row row">
+                                        <a @onclick="@( () => RedirectToTab(task.Item2) )"> @task.Item1  </a>
+                                        <div class="col">
+                                            <span data-toggle="tooltip" title="Presione sobre la tarea pendiente para ir al tab @toRedirectTab(task.Item2)"
+                                                  class="badge badge-primary badge-pill badge-text">!</span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>No hay información pendiente por agregar</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

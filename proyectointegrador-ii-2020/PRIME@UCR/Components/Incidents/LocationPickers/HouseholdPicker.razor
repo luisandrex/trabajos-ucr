@@ -1,0 +1,68 @@
+﻿@using PRIME_UCR.Components.Controls
+
+<Loading IsLoading="@_isLoading">
+    <EditForm EditContext="_context" OnValidSubmit="Submit">
+        <FluentValidationValidator />
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                @if (!ReadOnly)
+                {
+                <DropDownMenu Data="@_provinces" Label="Provincia" Value="@Value.Province" TextProperty="Nombre"
+                              DefaultText="Seleccione una provincia"
+                              ValueExpression="() => Value.Province"
+                              ValueChanged="@((Provincia p) => OnChangeProvince(p))"/>
+                <DropDownMenu Data="@_cantons" Label="Cantón" Value="@Value.Canton" TextProperty="Nombre"
+                              DefaultText="Seleccione un cantón"
+                              ValueExpression="() => Value.Canton"
+                              ValueChanged="@((Canton c) => OnChangeCanton(c))"/>
+                <DropDownMenu Data="@_districts" Label="Distrito"
+                              TextProperty="Nombre"
+                              DefaultText="Seleccione un distrito"
+                              @bind-Value="Value.District" />
+                }else{
+                    <TextBox Disabled="true" Required="false" @bind-Value="@Value.Province.Nombre" Label="Provincia" />
+                    <TextBox Disabled="true" Required="false" @bind-Value="@Value.Canton.Nombre" Label="Canton" />
+                    <TextBox Disabled="true" Required="false" @bind-Value="@Value.District.Nombre" Label="Distrito" />
+                }
+            </div>
+        </div>
+       <div class="row">
+           <div class="col-xl-4 col-lg-6">
+               @if (!ReadOnly)
+               {
+               <NumberInput Label="Longitud" @bind-Value="@Value.Longitude" />
+               <NumberInput Label="Latitud" @bind-Value="@Value.Latitude" />
+               }else{
+                <NumberInput Disabled="true" Required="false" @bind-Value="@(Value.Longitude)" Label="Longitud" />
+                <NumberInput Disabled="true" Required="false" @bind-Value="@(Value.Latitude)" Label="Latitud" />
+               }
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-xl-6 col-lg-8">
+               @if (!ReadOnly)
+               {
+                   <TextBox Label="Dirección Exacta" @bind-Value="@Value.Address" />
+               }
+               else { 
+                   <TextBox Disabled="true" Required="false" @bind-Value="@Value.Address" Label="Dirección Exacta" />
+               }
+           </div>
+       </div>
+        @if (!ReadOnly)
+        {
+           <div class="mt-2">
+                @if (!_saveButtonEnabled)
+                {
+                    <button disabled type="submit" class="btn btn-disabled">Guardar</button>
+                    <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-secondaryOne">Descartar</button>
+                }
+           </div>
+        }
+    </EditForm>
+</Loading>

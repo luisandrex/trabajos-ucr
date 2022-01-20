@@ -1,0 +1,63 @@
+﻿@inject NavigationManager MyNavegationManager
+
+<div class="@NavMenuCssClass text-white sidebar-show navbar-collapse" @onclick="ToggleNavMenu">
+    <ul class="nav responsive-sidebar flex-column justify-content-between">
+        <li class="nav-item px-2">
+            <NavLink class="nav-link" href="@GetUrl()">
+                <span class="@classOfModule" aria-hidden="true"></span> @moduleToShow
+            </NavLink>
+            <div>
+                @switch (moduleToShow)
+                {
+                    case "Dashboard":
+                        break;
+                    case "Expedientes":
+    <MedicalRecordsMenuComponent /> break;
+                    case "Administración de usuarios":
+                        break;
+                    case "Listas de chequeo":
+                        break;
+                    case "Incidentes":
+                        break;
+                    case "Mapa de incidentes":
+                        break;
+                    default:
+                        break;
+                }
+
+
+            </div>
+        </li>
+        <li class="nav-item px-2 @showIncidents">
+            <NavLink class="nav-link" href="incidents" Match="NavLinkMatch.All" @onclick="showIncidentsMenu">
+                <span class="oi oi-map" aria-hidden="true"></span> Incidentes
+            </NavLink>
+        </li>
+        <li class="nav-item px-2 @showMap">
+            <NavLink class="nav-link" href="map" Match="NavLinkMatch.All" @onclick="showMapMenu">
+                <span class="oi oi-map-marker" aria-hidden="true"></span> Mapa de incidentes
+            </NavLink>
+        </li>
+        <li class="nav-item px-2 @showCheckList">
+            <NavLink class="nav-link" href="checklist" Match="NavLinkMatch.All" @onclick="showCheckListMenu">
+                <span class="oi oi-list" aria-hidden="true"></span> Listas de chequeo
+            </NavLink>
+        </li>
+        <li class="nav-item px-2 @showMedicalRecords">
+            <NavLink class="nav-link" href="show-medical-record" Match="NavLinkMatch.All" @onclick="showMedicalRecordsMenu">
+                <!-- Esta oculto por ahora. Quitar clase hide para mostrar -->
+                <span class="oi oi-medical-cross" aria-hidden="true"></span> Expedientes
+            </NavLink>
+        </li>
+        <li class="nav-item px-2 @showDashboard">
+            <NavLink class="nav-link" href="dashboard" Match="NavLinkMatch.All" @onclick="showDashboardMenu">
+                <span class="oi oi-dashboard" aria-hidden="true"></span> Dashboard
+            </NavLink>
+        </li>
+        <li class="nav-item px-2 @showUserAdmin">
+            <NavLink class="nav-link" href="user_administration/profiles" Match="NavLinkMatch.All" @onclick="showUserAdminMenu">
+                <span class="oi oi-book" aria-hidden="true"></span> Administración de usuarios
+            </NavLink>
+        </li>
+    </ul>
+</div>

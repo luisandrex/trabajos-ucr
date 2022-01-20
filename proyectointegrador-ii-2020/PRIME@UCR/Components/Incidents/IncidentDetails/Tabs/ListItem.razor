@@ -1,0 +1,17 @@
+﻿<li class="list-group-item">
+    <div class="row">
+        <div class="col-6">
+            <strong>@Title</strong>:
+        </div>
+        <div class="col-6">
+            @Text
+        </div>
+    </div>
+</li>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Text { get; set; }
+}

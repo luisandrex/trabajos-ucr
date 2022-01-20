@@ -1,0 +1,65 @@
+﻿@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Components.Incidents.LocationPickers
+@using Microsoft.AspNetCore.Connections
+
+<SummaryMessage Content="Summary.Content" Values="Summary.Values" Class="info" />
+
+<h3>Origen del incidente</h3>
+<br />
+<Loading IsLoading="@_isLoading">
+    @if (Incident.Origin == null)
+    {
+        <StatusMessage Message="Este valor está pendiente para finalizar la creación del incidente." Class="warning" />
+    }
+    <StatusMessage Message="@StatusMessage" Class="@StatusClass" />
+    @if (!ReadOnly)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <EditForm Model="_selectedOriginType">
+                    <DropDownMenu Id="Tipo" Data="@_dropdownValuesOrigin" Label="Tipo de origen" TextProperty="Item2"
+                                  Value="_selectedOriginType"
+                                  ValueChanged="@((Tuple<OriginType, string> o) => OnOriginTypeChange(o))"
+                                  ValueExpression="() => _selectedOriginType"
+                                  UseValidation="false" />
+                </EditForm>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <EditForm Model="_selectedOriginType">
+                    <TextBox Disabled="true" Required="false" @bind-Value="@TypeOfOrigin" Label="Tipo de origen" />
+                </EditForm>
+            </div>
+        </div>
+    }
+    @if (_selectedOriginType.Item1 == OriginType.Household)
+    {
+        <HouseholdPicker Value="@_householdModel"
+                         OnSave="OnHouseholdSave"
+                         OnDiscard="LoadExistingValues"
+                         IsFirst="@(!(Origin is Domicilio))" 
+                         ReadOnly="@ReadOnly"/>
+
+    }
+    else if (_selectedOriginType.Item1 == OriginType.International)
+    {
+        <InternationalPicker Value="_internationalModel"
+                             OnSave="@OnInternationalSave"
+                             OnDiscard="LoadExistingValues"
+                             IsFirst="@(!(Origin is Internacional))" 
+                             ReadOnly="@ReadOnly"/>
+    }
+    else //hospital
+    {
+        <MedicalCenterPicker Value="_medicalCenterModel"
+                             IsOrigin="@true"
+                             OnSave="@OnMedicalCenterSave"
+                             OnDiscard="LoadExistingValues"
+                             IsFirst="@(!(Origin is CentroUbicacion))" 
+                             ReadOnly="@ReadOnly"/>
+    }
+</Loading>

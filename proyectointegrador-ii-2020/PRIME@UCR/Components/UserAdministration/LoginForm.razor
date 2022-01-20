@@ -1,0 +1,41 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<div class="col-12 mt-5 text-white">
+    <EditForm EditContext="_context" OnValidSubmit="@ValidateUser">
+        <DataAnnotationsValidator />
+
+        <TextBox Id="Correo" Label="Correo Electrónico:" @bind-Value="@logInInfo.Correo" />
+
+        <PasswordTextBoxComponent Id="Contrasena" Label="Contraseña:" @bind-Value="@logInInfo.Contraseña" />
+
+        <a class="text-secondary" href="/requestPasswordRecovery"><u>Recuperar contraseña</u></a>
+        <br />
+        <div class="text-left @invalidUser">
+            <p id="emailHelp" class="text-danger">Ingresó su usuario o contraseña incorrectamente. Intente de nuevo.</p>
+        </div>
+        <div class="text-left @notRegistered">
+            <p id="emailHelp" class="text-warning">Su cuenta no ha sido validada, le hemos enviado un correo con un enlace de validación.</p>
+        </div>
+        <div class="d-flex justify-content-center">
+            @if (isBusy) // Loading button
+            {
+                <button class="btn btn-light width:14em mt-2" type="button">
+                    <span class="spinner-border spinner-border-sm" style="background-color:white" role="status" aria-hidden="true" /> Validando datos 
+                </button> 
+            }
+            else
+            {
+                @if (isFormValid) // Disable button if form is not valid
+                {
+                    <button id="Ingresar" type="submit" style="width:13em" class="btn btn-light mt-2">Ingresar</button> 
+                }
+                else
+                {
+                    <button id="Ingresar" type="submit" style="width:13em" class="btn btn-secondary mt-2" disabled>Ingresar</button>
+                }
+            }
+        </div>
+    </EditForm>
+<small id="emailHelp" class="text-white">No compartiremos su correo electrónico con nadie.</small>
+</div>

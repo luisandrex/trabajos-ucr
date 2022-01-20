@@ -1,0 +1,43 @@
+﻿@using BlazorTable
+@using PRIME_UCR.Domain.Models.Appointments
+@inject IAppointmentService appointment_service
+
+
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+<Loading IsLoading="Medpres == null">
+    <div class="prescriptions" style="resize:both">
+        <Table TableItem="PoseeReceta" Items="Medpres" PageSize="5" @ref="appointprescripModel" ColumnReorder="true" class="table table-bordered">
+            <Column TableItem="PoseeReceta" Title="Medicamento" Field="@(x => x.RecetaMedica.NombreReceta)" Width="20%">
+            </Column>
+
+            <Column TableItem="PoseeReceta" Title="Prescripción" Field="@(x => x.Dosis)" Width="20%">
+                <Template>
+                    @if (String.Equals(context.Dosis, ""))
+                    {
+                        <label for="@context.IdRecetaMedica">Descripción</label>
+                        @**@
+                        <textarea name="@context.IdRecetaMedica" @bind="prescription_text_area" maxlength="100"></textarea>
+                        <button type="submit" class="btn btn-primary" @onclick="@(() => set_prescription_dosis(context))">Guardar</button>
+                    }
+                    else
+                    {
+                        <p>@context.Dosis</p>
+                    }
+
+                </Template>
+            </Column>
+
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No existen medicamentos recetados.
+                </div>
+            </EmptyDataTemplate>
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+    </div>
+</Loading>

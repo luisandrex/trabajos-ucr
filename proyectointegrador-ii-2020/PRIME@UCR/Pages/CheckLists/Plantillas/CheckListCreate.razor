@@ -1,0 +1,78 @@
+﻿@page "/checklist/create"
+@using PRIME_UCR.Components.Controls
+@inherits CheckListCreateBase
+@using PRIME_UCR.Components.CheckLists.Plantillas
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants;
+@attribute [HasPermission(AuthorizationPermissions.CanCreateChecklist)]
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<h2>Plantillas de listas de chequeo</h2>
+<hr />
+<div class="row">
+    <CheckListMenu Lists="lists" />
+    @*
+        Story: PIG01IIC20-309
+        Tasks: PIG01IIC20-399, PIG01IIC20-346, PIG01IIC20-450
+        Devs: Stephanie Leiton, Juan Pablo Gamboa
+    *@
+    <div class="col">
+        @* Contains the form to create a new checklist *@
+        <div class="container" id="contAll_LC" style="background: white;">
+            <h3>Crear plantilla de lista de chequeo</h3>
+            <br />
+            <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+                <FluentValidationValidator />
+                @* Input for the name of the checklist *@
+                <TextBox Label="Nombre " @bind-Value="@checkList.Nombre" Required="true" />
+                <br />
+                @* Input for the description of the checklist *@
+                <label for="description">Descripción </label>
+                <TextAreaInput @bind-Value="checkList.Descripcion" Rows="3" Cols="50" />
+                <br />
+                <div class="form-row">
+                    <div class="col-6">
+                        @* Input for the type of the checklist with predefined options *@
+                        <DropDownMenu Label="Tipo " Data="_types" @bind-Value="checkList.Tipo"
+                                      DefaultText="Seleccione el tipo de la lista de chequeo"
+                                      Required="true" />
+                    </div>
+                    <div class="col-6">
+                        @* Input for the order of the checklist with a recommended value *@
+                        <label for="Tipo">Orden <span style=" color:red">*</span></label>
+                        <br />
+                        <IntegerInput Label="" @bind-Value="checkList.Orden" Min="1" Required />
+                    </div>
+                </div>
+                <br />
+                @* Drop zone for the image of the checklist *@
+                <label>Imagen</label>
+                <div class="form-row">
+                    <div class="col-6">
+                        <LoadImageComponent @bind-list="checkList" />
+                    </div>
+                    @if (@checkList.ImagenDescriptiva != null)
+                    {
+                        <div class="col-6">
+                            <img src="@checkList.ImagenDescriptiva" width="50" height="50" />
+                        </div>
+                    }
+                </div>
+                <br />
+
+                <div align="center">
+                    @if (formInvalid)
+                    {
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-secondary" disabled>Guardar</button>
+                    }
+                    <a class="btn btn-outline-secondary" href='@string.Format("checklist")' id="a_LC3">Cancelar</a> @*to do: ir a la anterior  *@
+                </div>
+            </EditForm>
+        </div>
+        <br />
+    </div>
+</div>

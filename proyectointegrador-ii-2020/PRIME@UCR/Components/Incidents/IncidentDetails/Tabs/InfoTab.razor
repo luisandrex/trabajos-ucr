@@ -1,0 +1,60 @@
+﻿@using PRIME_UCR.Domain.Models.UserAdministration
+@using PRIME_UCR.Application.Services.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@using PRIME_UCR.Components.Incidents.StatePanel 
+
+<h3> Información general del incidente</h3>
+<br />
+<Loading IsLoading="@_isLoading">
+@if (DetailsModel.CurrentState == IncidentStates.Approved.Nombre)
+{
+<StatusMessage Message="@($"Aprobado por {DetailsModel.Reviewer.NombreCompleto}")" Class="primary" />
+ }
+else if (DetailsModel.CurrentState == IncidentStates.Rejected.Nombre)
+    {        
+        <AlertRowMessage Class="danger">
+            <AlertRowTemplate Header="Rechazado por" Message="@DetailsModel.Reviewer.NombreCompleto" />
+            <AlertRowTemplate Header="Razón de rechazo" Message="@DetailsModel.FeedBack.RazonDeRechazo" />
+        </AlertRowMessage>
+    }
+<div class="row table-responsive">
+    <table class="table responsive">
+        <tbody>
+            <tr>
+                <td>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Identificador</strong>:
+                                </div>
+                                <div class="col-4">
+                                    @DetailsModel.Code
+                                </div>
+                                <div class="col-2">
+                                    <PdfComponent IncidentCode="@DetailsModel.Code" IncidentState="@DetailsModel.CurrentState" ChangeLoading="@IsLoading"></PdfComponent>
+                                </div>
+                            </div>
+                        </li>
+                        <ListItem Title="Estado" Text="@DetailsModel.CurrentState" />
+                        <ListItem Title="Modalidad" Text="@DetailsModel.Mode" />
+                        <ListItem Title="Fecha estimada del traslado"
+                                  Text="@($"{DetailsModel.EstimatedDateOfTransfer.ToShortDateString()} - {DetailsModel.EstimatedDateOfTransfer.ToShortTimeString()}")" />
+                        <ListItem Title="Fecha de registro"
+                                  Text="@($"{DetailsModel.RegistrationDate.ToShortDateString()} - {DetailsModel.RegistrationDate.ToShortTimeString()}")" />
+                        <ListItem Title="Creado por"
+                                  Text="@(_creator?.NombreCompleto)" />
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <br />
+    <br />
+    <PermissionAuthorizeView Permission="@AuthorizationPermissions.CanReviewIncidents" ShowDeniedPermissionMessage=false>
+        <div class="container">
+            <StatePanel Incident="@DetailsModel" OnSave="@OnSave" CurrentUser="@CurrentUser"/>
+        </div>
+    </PermissionAuthorizeView>
+</Loading>

@@ -1,0 +1,54 @@
+﻿@page "/user_administration/profiles"
+@using PRIME_UCR.Components.UserAdministration.ProfilesModifications
+@using ChartJs.Blazor.Charts
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants
+
+@attribute [HasPermission(AuthorizationPermissions.CanManageUsers)]
+
+<h3> Modificación de Permisos y Perfiles </h3>
+<hr />
+<div class="row">
+    <div class="col-sm-2 mb-4">
+        <UserAdministrationMenuComponent />
+    </div>
+    <div class="col-sm-10">
+        <StatusMessage Message="@profile.StatusMessage" Class="@profile.StatusMessageType" />
+    
+        <div class="container-fluid">
+            <div class="rounded" style="background-color: white;padding: 10px">
+                <h5>Perfiles</h5>
+                <ProfilesComponent @bind-Value="profile" />
+            </div>
+
+            <br />
+
+            @if (!String.IsNullOrEmpty(profile.ProfileName))
+            {
+                <div class="row  d-flex justify-content-center">
+                    <Loading IsLoading="profile.ProfileName == null || isLoading == true">
+                        <div class="col-6">
+                            <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px;">
+                                <br />
+                                <h5>Usuarios</h5>
+                                <UsersComponent @bind-Value="profile"
+                                                isLoading="isLoading"
+                                                isLoadingChanged="() => { isLoading = !isLoading; StateHasChanged(); }" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+
+                            <div class="rounded" style="background-color:white;padding-left: 10px;padding-right: 10px;">
+                                <br />
+                                <h5>Permisos</h5>
+                                <PermissionsComponent @bind-Value="profile"
+                                                        isLoading="isLoading"
+                                                        isLoadingChanged="()=> { isLoading = !isLoading; StateHasChanged(); }" />
+                            </div>
+                            </div>
+                    </Loading>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@inherits InputBase<DateTime?>
+
+<div class="form-group">
+    <div class="form-group">
+        <label>@DateLabel</label>
+        <input type="date" value="@Value?.ToString("yyyy-MM-dd")"
+               class="@($"form-control {ValidationCssClass}")"
+               @onchange="OnDateChanged"
+               min="@(Min?.ToString("yyyy-MM-dd"))"
+               max="@(Max?.ToString("yyyy-MM-dd"))" />
+    </div>
+    <div class="form-group">
+        <label>@TimeLabel</label>
+        <input type="time" class="@($"form-control {ValidationCssClass}")"
+               value="@_time"
+               @onchange="e => OnTimeChanged(e)"/>
+        <ValidationMessage For="ValueExpression" />
+    </div>
+</div>

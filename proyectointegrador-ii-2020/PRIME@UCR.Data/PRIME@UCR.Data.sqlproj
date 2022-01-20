@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>PRIME_UCR.Data</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{e1b1ff1f-3177-4ba4-8a19-01127ae40579}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>PRIME_UCR.Data</RootNamespace>
+    <AssemblyName>PRIME_UCR.Data</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\PostDeployment" />
+    <Folder Include="Tables\" />
+    <Folder Include="Tables\Incidents" />
+    <Folder Include="Tables\UserEntityCore" />
+    <Folder Include="Tables\UserAdministration" />
+    <Folder Include="Tables\CheckLists" />
+    <Folder Include="Tables\" />
+    <Folder Include="Triggers" />
+    <Folder Include="Indexes" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="StoredProcedures\Incidents\" />
+    <Folder Include="Tables\Appointments" />
+    <Folder Include="Tables\MedicalRecords" />
+    <Folder Include="StoredProcedures\UserAdministration" />
+    <Folder Include="StoredProcedures\Multimedia" />
+    <Folder Include="StoredProcedures\CheckLists" />
+    <Folder Include="Indexes\Incidents\" />
+    <Folder Include="StoredProcedures\Dashboard" />
+    <Folder Include="Indexes\Incidents\" />
+    <Folder Include="Indexes\Checklist" />
+    <Folder Include="Indexes\MedicalRecord" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Indexes\Incidents\ix_incidente_activo.sql" />
+    <Build Include="Tables\CheckLists\CheckList.sql" />
+    <Build Include="Tables\CheckLists\Item.sql" />
+    <Build Include="Tables\Incidents\Pais.sql" />
+    <Build Include="Tables\Incidents\Provincia.sql" />
+    <Build Include="Tables\Incidents\Canton.sql" />
+    <Build Include="Tables\Incidents\Distrito.sql" />
+    <Build Include="Tables\Incidents\Ubicacion.sql" />
+    <Build Include="Tables\Incidents\Domicilio.sql" />
+    <Build Include="Tables\Incidents\Internacional.sql" />
+    <Build Include="Tables\Incidents\Centro_Medico.sql" />
+    <Build Include="Tables\Incidents\Centro_Ubicacion.sql" />
+    <Build Include="Tables\Incidents\Modalidad.sql" />
+    <Build Include="Tables\Incidents\Incidente.sql" />
+    <Build Include="Tables\Incidents\Estado.sql" />
+    <Build Include="Tables\Incidents\EstadoIncidente.sql" />
+    <Build Include="Tables\Incidents\Unidad_De_Transporte.sql" />
+    <Build Include="Tables\Incidents\MultimediaContent.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetRoles.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetUsers.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetRoleClaims.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetUserClaims.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetUserLogins.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetUserRoles.sql" />
+    <Build Include="Tables\UserEntityCore\AspNetUserTokens.sql" />
+    <Build Include="Tables\UserAdministration\Administrador.sql" />
+    <Build Include="Tables\UserAdministration\AdministradorCentroDeControl.sql" />
+    <Build Include="Tables\UserAdministration\CoordinadorTécnicoMédico.sql" />
+    <Build Include="Tables\UserAdministration\EspecialistaTécnicoMédico.sql" />
+    <Build Include="Tables\UserAdministration\Funcionario.sql" />
+    <Build Include="Tables\UserAdministration\GerenteMédico.sql" />
+    <Build Include="Tables\UserAdministration\Médico.sql" />
+    <Build Include="Tables\UserAdministration\NúmeroTeléfono.sql" />
+    <Build Include="Tables\UserAdministration\Paciente.sql" />
+    <Build Include="Tables\UserAdministration\Perfil.sql" />
+    <Build Include="Tables\UserAdministration\Permiso.sql" />
+    <Build Include="Tables\UserAdministration\Permite.sql" />
+    <Build Include="Tables\UserAdministration\Persona.sql" />
+    <Build Include="Tables\UserAdministration\Pertenece.sql" />
+    <Build Include="Tables\UserAdministration\TienePerfil.sql" />
+    <Build Include="Tables\UserAdministration\Usuario.sql" />
+    <Build Include="Tables\Incidents\Trabaja_En.sql" />
+    <Build Include="Triggers\InsertarIncidente.sql" />
+    <Build Include="Triggers\DeleteMultimediaContent.sql" />
+    <Build Include="StoredProcedures\Incidents\InsertarNuevoIncidente.sql" />
+    <Build Include="Tables\Appointments\Cita.sql" />
+    <Build Include="Tables\Appointments\MetricasCitaMedica.sql" />
+    <Build Include="Tables\Appointments\Accion.sql" />
+    <Build Include="Tables\Appointments\TipoAccion.sql" />
+    <Build Include="Tables\MedicalRecords\Expediente.sql" />
+    <Build Include="StoredProcedures\UserAdministration\InsertarPacienteSolo.sql" />
+    <Build Include="Tables\Incidents\AsignadoA.sql" />
+    <Build Include="StoredProcedures\UserAdministration\DeletePermissionFromProfile.sql" />
+    <Build Include="StoredProcedures\UserAdministration\DeleteUserFromProfile.sql" />
+    <Build Include="StoredProcedures\UserAdministration\InsertPermissionToProfile.sql" />
+    <Build Include="StoredProcedures\UserAdministration\InsertUserToProfile.sql" />
+    <Build Include="StoredProcedures\CheckLists\InsertarListaChequeo.sql" />
+    <Build Include="StoredProcedures\CheckLists\InsertarItemEnListaDeChequeo.sql" />
+    <Build Include="Triggers\InsertarPerfil.sql" />
+    <Build Include="Triggers\DeletePerfil.sql" />
+    <Build Include="StoredProcedures\Multimedia\ObtenerContenidoMultimediaCita.sql" />
+    <Build Include="StoredProcedures\Multimedia\FObtenerContendidoMultimediaCita.sql" />
+    <Build Include="StoredProcedures\Incidents\InsertarAccion.sql" />
+    <Build Include="Tables\MedicalRecords\ListaAntecedentes.sql" />
+    <Build Include="Tables\MedicalRecords\Antecedentes.sql" />
+    <Build Include="Tables\MedicalRecords\Alergias.sql" />
+    <Build Include="Tables\MedicalRecords\ListaAlergia.sql" />
+    <Build Include="Tables\CheckLists\InstanceChecklist.sql" />
+    <Build Include="Tables\CheckLists\InstanciaItem.sql" />
+    <Build Include="Tables\CheckLists\TipoListaChequeo.sql" />
+    <Build Include="Tables\CheckLists\MultimediaContentItem.sql" />
+    <Build Include="StoredProcedures\Dashboard\GetIncidentsCounter.sql" />
+    <Build Include="Triggers\CheckearItem.sql" />
+    <Build Include="Tables\MedicalRecords\PadecimientosCronicos.sql" />
+    <Build Include="Tables\MedicalRecords\ListaPadecimiento.sql" />
+    <Build Include="Tables\Incidents\DocumentacionIncidente.sql" />
+    <Build Include="Tables\Incidents\CambioIncidente.sql" />
+    <Build Include="Indexes\Checklist\ix_checklist_activas.sql" />
+    <Build Include="Triggers\AfterDeleteInstance.sql" />
+    <Build Include="Triggers\AfterInsertInstance.sql" />
+    <Build Include="StoredProcedures\CheckLists\InsertarInstaciaItem.sql" />
+    <Build Include="StoredProcedures\CheckLists\InsertarListaIntanciada.sql" />
+    <Build Include="Tables\Appointments\CitaMedica.sql" />
+    <Build Include="Tables\Appointments\RecetaMedica.sql" />
+    <Build Include="Tables\Appointments\PoseeReceta.sql" />
+    <Build Include="Tables\Appointments\EstadoCitaMedica.sql" />
+    <Build Include="Tables\Appointments\SeEspecializa.sql" />
+    <Build Include="Tables\Appointments\EspecialidadMedica.sql" />
+    <Build Include="Tables\Appointments\ReferenciaCita.sql" />
+    <Build Include="Indexes\Checklist\ix_ListaID.sql" />
+    <Build Include="Indexes\Checklist\ix_CoreItems.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Identity_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Incidents_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Checklists_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Users_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Appointments_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\MedicalRecords_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Alergies_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\MedAppointments_PostDeployment.sql" />
+    <None Include="Scripts\PostDeployment\Specialties_PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Triggers\DeleteMultimediaContent.sql" />
+    <None Include="Indexes\MedicalRecord\MedicalRecordIndex.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PRIME%40UCR.Data.refactorlog" />
+  </ItemGroup>
+</Project>

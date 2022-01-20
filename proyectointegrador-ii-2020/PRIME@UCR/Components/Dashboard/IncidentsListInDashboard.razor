@@ -1,0 +1,53 @@
+﻿@using BlazorTable
+@using PRIME_UCR.Domain.Constants
+<!-- Only: (control center admin, coordinator and technical medical specialist) can view the incident list -->
+
+<Loading IsLoading="_isLoading">
+    <div class="jumbotron white-panel">
+        <h1>Lista de Incidentes</h1>
+
+        <Table TableItem="Incidente" Items="Data.filteredIncidentsData" PageSize="10" @ref="Table" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+            <Column TableItem="Incidente" Title="Código" Field="@(x => x.Codigo)" Filterable="true" Sortable="true" Width="18%" DefaultSortColumn="true">
+                <Template>
+                    <a href="/incidents/@context.Codigo">@context.Codigo</a>
+                </Template>
+            </Column>
+            <Column TableItem="Incidente" Title="Fecha de registro" Field="@(x => x.Cita.FechaHoraCreacion)" Filterable="true" Sortable="true" Width="18%" />
+            <Column TableItem="Incidente" Title="Estado" Field="@(x => x.EstadoIncidentes.Find((EstadoIncidente e) => e.Activo == true).NombreEstado)" Filterable="true" Sortable="true" Width="14%" />
+            <Column TableItem="Incidente" Title="Modalidad" Field="@(x => x.Modalidad)" Filterable="true" Sortable="true" Width="12%" />
+            <Column TableItem="Incidente" Title="Origen" Field="@(x => x.Origen.DisplayName)" Filterable="true" Sortable="true" Width="12%">
+                <Template>
+                    @if (context.Origen == null)
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        <div>@context.Origen.DisplayName</div>
+                    }
+                </Template>
+            </Column>
+            <Column TableItem="Incidente" Title="Destino" Field="@(x => x.Destino)" Filterable="true" Sortable="true" Width="20%">
+                <Template>
+                    @if (context.Destino == null)
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        <div>@context.Destino.DisplayName</div>
+                    }
+                </Template>
+            </Column>
+
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No se encontraron incidentes registrados.
+                </div>
+            </EmptyDataTemplate>
+
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+    </div>
+
+</Loading>

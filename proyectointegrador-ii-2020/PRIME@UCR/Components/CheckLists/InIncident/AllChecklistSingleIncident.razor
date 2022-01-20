@@ -1,0 +1,72 @@
+﻿@inherits AllChecklistSingleIncidentBase
+@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.CheckLists;
+@using PRIME_UCR.Components.CheckLists.InIncident
+@using PRIME_UCR.Domain.Constants;
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@attribute [HasPermission(AuthorizationPermissions.CanInstantiateChecklist)]
+@attribute [Authorize]
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<Loading IsLoading="lists == null">
+    @if (instancelists.Count() == 0)
+    {
+        if (!ReadOnly)//Incident not in finished state
+        {
+            <p><em class="nav-link">No se ha asignado ninguna lista, presione el <a href='@string.Format("/checklist/{0}",IncidentCod)'>boton +</a> para asignar alguna.</em></p>
+        }
+        else
+        {
+            <p><em>No se asignó ninguna lista de chequeo durante el incidente.</em></p>
+        }
+    }
+    else
+    {
+        <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px; padding-top:10px;">
+            <EditForm Model="instancelists">
+                <Table TableItem="InstanceChecklist" Items="instancelists" PageSize="3">
+
+                    <Column TableItem="InstanceChecklist" Title="Nombre" Field="@( x => x.PlantillaId)" Width="25%">
+                        <Template Context="tempList">
+                            <a href='@string.Format("incidents/{0}/{1}", @tempList.IncidentCod, @tempList.PlantillaId)'>@GetName2(tempList.PlantillaId)</a>
+                        </Template>
+
+                    </Column>
+                    <Column TableItem="InstanceChecklist" Title="Tipo" Field="@(x => x.PlantillaId)" Width="20%">
+                        <Template Context="tempList">
+                            <a>
+                                @GetTipo2(tempList.PlantillaId)
+                            </a>
+                        </Template>
+                    </Column>
+                    <Column TableItem="InstanceChecklist" Title="Descripción" Field="@(x => x.PlantillaId)" Width="20%">
+                        <Template Context="tempList">
+                            <a>
+                                @GetDescp2(tempList.PlantillaId)
+                            </a>
+                        </Template>
+                    </Column>
+                    <Column TableItem="InstanceChecklist" Title="Completados" Field="@(x => x.PlantillaId)" Width="5%">
+                        <Template Context="tempList">
+                            <a>
+                                @GetSpecificSummary(tempList.PlantillaId)
+                            </a>
+                        </Template>
+                    </Column>
+
+                    <EmptyDataTemplate>
+                        <div class="text-center">
+                            No se encontraron listas de chequeo instanciadaa
+                        </div>
+                    </EmptyDataTemplate>
+                    <Pager ShowPageNumber="true" />
+                </Table>
+            </EditForm>
+        </div>
+    }
+    <AuthorizeView Policy="@AuthorizationPermissions.CanInstantiateChecklist.ToString()">
+        <br />
+        <SummaryMessage Content="states" Values="details" Class="info" />
+    </AuthorizeView>
+</Loading>

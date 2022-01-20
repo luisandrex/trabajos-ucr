@@ -1,0 +1,359 @@
+
+/*Button for seve a new checklist */
+button#BP_A_LC0.btn.btn-primary {
+    background-color: #095290;
+    color: white;
+}
+
+button:hover#BP_LC0.btn.btn-primary {
+    background: #00c0f3;
+    color: white;
+}
+button:active#BP_LC0.btn.btn-primary {
+    background-color: #095290;
+    color: white;
+}
+
+button:disabled#BP_LC0.btn.btn-primary {
+    background: #676766;
+    border-color: black;
+}
+
+/*a for save checklist */
+a#a_LC0.btn.btn-outline-primary {
+    background: #095290;
+    color: white;
+}
+
+a:active#a_LC0.btn.btn-outline-primary {
+    background: #095290;
+    color: white;
+}
+
+a:hover#a_LC0.btn.btn-outline-primary {
+    background: #00c0f3;
+    color: white;
+}
+
+a:disabled#a_LC0.btn.btn-outline-primary {
+    background: #676766;
+}
+
+/*a for cancele  checklist */
+a#a_LC3.btn.btn-outline-secondary {
+    background: transparent; /*#6c757d*/
+}
+
+a:hover#a_LC3.btn.btn-outline-secondary {
+    background: #676766;
+}
+
+/*a for create checklist */
+a#a_LC1.btn.btn-outline-primary {
+    background: #095290; /*rgba(49, 169, 255, 0.80)*/
+    position: absolute;
+    top: 500px;
+    right: 20px;
+    color: white;
+    border-radius: 1.0rem;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 4px;
+}
+a:active#a_LC1.btn.btn-outline-primary {
+}
+
+a:hover#a_LC1.btn.btn-outline-primary {
+}
+
+a:disabled#a_LC1.btn.btn-outline-primary {
+    background: #676766;
+}
+
+/*a for create  checklist 2 */
+a#a_LC2.btn.btn-outline-primary {
+    background: #095290; /*rgba(49, 169, 255, 0.80)*/
+    color: white;
+    border-radius: 50%;
+    border-color: #095290;
+    position: absolute;
+    right: 10%;
+    top: -10px;
+}
+
+a:active#a_LC1.btn.btn-outline-primary {
+}
+
+a:hover#a_LC2.btn.btn-outline-primary {
+}
+
+a:disabled#a_LC2.btn.btn-outline-primary {
+    background: #676766;
+}
+
+a:active#a_LC2.btn.btn-outline-primary {
+    background: rgba(22, 69, 103, 0.80);
+}
+/*a for single  checklist */
+a#a_LC4.nav-link {
+
+}
+
+a:active#a_LC4.nav-link {
+    background: #007BFF;
+    color: white;
+}
+a:hover#a_LC4.nav-link {
+    background: #007BFF;
+    color: white;
+}
+
+
+/* table to see all checklist*/
+#Table_CL {
+    background: white;
+}
+
+/*View all checklist created*/
+.container#contAll_LC {
+    padding-top: 16px;
+    background: white;
+    border-radius: 5px;
+    padding-bottom: 16px;
+}
+
+.col-lg-3.mb-4#colALL_LC {
+    background: white;
+    border-radius: 5px;
+}
+
+/*Create item for a checklist*/
+button#BP_LC6.btn.btn-primary {
+    background: transparent;
+    color: black;
+    border-radius: 1.0rem;
+    border-width: 1px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-right: 10px;
+    margin-left: 8px;
+    border-color: black;
+}
+
+button:hover#BP_LC6.btn.btn-primary {
+    border-color: #676766;
+}
+/* boby, have items and subitems from a checklist */
+#Body_LC {
+    background: #E6E6E6;
+    border-radius: 5px;
+    position: relative;
+    border-color: black;
+    border: 0px;
+    border-style: solid;
+}
+/*Create items and subitems*/
+#Create_I-SI_LC {
+    background: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    border: darkgrey 1px;
+    border-style: solid;
+}
+/*Edit items and subitems*/
+#Edit_I-SI_LC {
+    background: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+    border: darkgrey 1px;
+    border-style: solid;
+}
+
+/* Modify checklist*/
+input#checklistName { /*Name checklist*/
+    background: white;
+    border-radius: 5px;
+    padding: inherit;
+}
+
+select#checklistType { /*Tipe checklist*/
+    background: white;
+    border-radius: 5px;
+    padding: inherit;
+    padding-top: 5px;
+}
+/*
+input#checklistId {  identify checklist
+    background: white;
+    border-radius: 5px;
+    padding: inherit;
+}*/
+
+input#checklistOrder { /*Order checklisy*/
+    background: white;
+    border-radius: 5px;
+    padding: inherit;
+    padding-top: 2px;
+    padding-right: 2px;
+    margin-left: 10px;
+}
+
+textarea#checklistDescription {
+    background: white; /*Description checklist*/
+    border-radius: 5px;
+    padding: inherit;
+}
+
+/*View all checklist created*/
+.container#contAll_LC {
+    padding-top: 16px;
+    background: lightgrey;
+    border-radius: 5px;
+    padding-bottom: 16px;
+}
+
+.col-lg-3.mb-4#colALL_LC {
+    background: dimgrey;
+    border-radius: 5px;
+}
+
+/*definition of a single checklist*/
+#def_LC {
+    background: white;
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+/*Create subitem*/
+button#Menu_LC { /*.btn.btn-primary*/
+    background: transparent;
+    color: black;
+    border-color: transparent;
+}
+
+
+/*File drop zone*/
+.dropzone {
+    border: 3px dashed steelblue;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+    color: #444;
+    position: relative;
+    max-height: 50px;
+    cursor: pointer;
+}
+
+.dropzone>p {
+    margin: 0;
+    cursor: pointer;
+}
+.dropzone:hover {
+    background-color: #f3f3f3;
+    color: #333;
+    cursor: pointer;
+}
+
+.dropzone input[type=file] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.dropzone-drag {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.customLoadImage {
+    border: 0;
+    padding: 0 !important;
+    margin: 0;
+    cursor: pointer;
+    left: -50px !important;
+    top: 5px !important;
+}
+
+/* button of image in checklist definition*/
+button.none#BN_LC {
+    border: 0px;
+}
+/*All checklst templates*/
+div#All_LC {
+    background: white;
+    padding-left: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 16px;
+}
+
+/* state for a single checklist in incident*/
+#state_LC {
+    background: white; /* #E6E6E6*/
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+/*definition of a single checklist in incident*/
+#def_LC_Inst {
+    background: #E6E6E6; /*white;*/
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+
+
+.checklist-table {
+    margin: 0;
+}
+
+.checklist-table>tbody>tr>td, .checklist-table>tbody>tr>th {
+    border: 0;
+}
+
+.ui-treenode-content-selected {
+    background-color: rgba(0,0,0,.075);
+}
+
+.ui-treenode-content:not(.ui-treenode-content-selected):hover {
+    background-color: rgba(0,0,0,.075);
+    color: #ffffff;
+    border-radius: 2px;
+}
+
+.ui-treenode-content-selected > .blankSpace {
+    background-color: #d4d4d4;
+    color: #d4d4d4;
+}
+
+.ui-treenode-content:not(.ui-treenode-content-selected):hover > .blankSpace {
+    background-color: #d4d4d4;
+    color: #d4d4d4;
+}
+
+.blankSpace {
+    position: absolute;
+    background: #E6E6E6;
+    width: 20px;
+    opacity: 1;
+    z-index: 9;
+    color: #E6E6E6;
+}

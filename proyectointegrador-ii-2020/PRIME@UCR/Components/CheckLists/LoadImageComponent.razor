@@ -1,0 +1,19 @@
+﻿@inherits LoadImageComponentBase
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<div class="dropzone @dropClass rounded">
+    <BlazorInputFile.InputFile id="fileInput" title=""
+                OnChange="HandleSelectedImage"
+                accept=".png,.gif,.jpeg,.jpg,.svg"
+                @ondragenter="HandleDragEnter"
+                @ondragleave="HandleDragLeave" />
+    @if (lastFile == "")
+    {
+        <p>Inserte una imagen</p>
+    }
+    else
+    {
+        @* Displays the name of the uploaded image *@
+        <p>@lastFile</p>
+    }
+</div>

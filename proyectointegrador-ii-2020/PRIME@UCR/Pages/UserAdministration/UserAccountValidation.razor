@@ -1,0 +1,36 @@
+﻿@using PRIME_UCR.Components.Controls
+@page  "/validateUserAccount/{EmailEncoded}/{Code1Encoded}/{Code2Encoded}"
+
+<h3>
+    Configuración inicial de cuenta de usuario
+</h3>
+
+<Loading IsLoading="ValidationState == 'N'">
+    @if (ValidationState == 'F')
+    {
+        <StatusMessage Message="Ha ocurrido un error, por favor contacte al administrador de la página web." 
+                       Class="danger"/>
+    } else
+    {
+        @if(ResultOfRecovery == 'T')
+        {
+            <StatusMessage  Message = "Su contraseña ha sido restablecida correctamente"
+                            Class = "success" />
+        } else
+        {
+            <StatusMessage Message = "Recuerde que la contraseña debe al menos simbolos, números, mayúsculas, minúsculas y al menos 8 caracteres"
+                           Class = "warning" />
+        }
+
+
+        <div class="bg-white rounded p-1">
+            <EditForm Model = "@UserValidationInfo" OnValidSubmit="SetPassword">
+                <FluentValidationValidator />
+                <SetNewPasswordComponent @bind-PasswordModel="UserValidationInfo.PasswordModel"
+                                         @bind-IsBusy="isBusy"/>
+            </EditForm>
+        </div>
+    }
+</Loading>
+
+

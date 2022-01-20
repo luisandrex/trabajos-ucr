@@ -1,0 +1,15 @@
+﻿@page "/logout"
+@using PRIME_UCR.Application.Implementations.UserAdministration
+
+@code {
+    [Inject] public AuthenticationStateProvider authProvider { get; set; }
+    [Inject] public NavigationManager navManager { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var customAuth = (CustomAuthenticationStateProvider)authProvider;
+        await customAuth.Logout();
+        navManager.NavigateTo("");
+    }
+
+}

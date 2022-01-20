@@ -1,0 +1,64 @@
+@page "/incidents"
+@using BlazorTable
+@using PRIME_UCR.Application.DTOs.Incidents
+@using PRIME_UCR.Domain.Constants
+<!-- Only: (control center admin, coordinator and technical medical specialist) can view the incident list -->
+@attribute [HasPermission(AuthorizationPermissions.CanSeeIncidentsList)]
+
+<Loading IsLoading="@_isLoading">
+    <div class="jumbotron white-panel pb-3 pt-3 px-4">
+        <h1>Lista de Incidentes</h1>
+        <Table TableItem="IncidentListModel" Items="incidentsList" PageSize="10" @ref="Table" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+            <Column TableItem="IncidentListModel" Title="Fecha de registro" Field="@(x => x.FechaHoraRegistro)" Filterable="true" Sortable="true" Width="18%" />
+            <Column TableItem="IncidentListModel" Title="Código" Field="@(x => x.Codigo)" Filterable="true" Sortable="true" Width="18%">
+                <Template>
+                    <a href="/incidents/@context.Codigo">@context.Codigo</a>
+                </Template>
+            </Column>
+            <Column TableItem="IncidentListModel" Title="Estado" Field="@(x => x.Estado)" Filterable="true" Sortable="true" Width="14%" />
+            <Column TableItem="IncidentListModel" Title="Modalidad" Field="@(x => x.Modalidad)" Filterable="true" Sortable="true" Width="12%" />
+            <Column TableItem="IncidentListModel" Title="Origen" Field="@(x => x.Origen)" Filterable="true" Sortable="true" Width="12%">
+                <Template>
+                    @if (context.Origen == null)
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        <div>@context.Origen</div>
+                    }
+                </Template>
+            </Column>
+            <Column TableItem="IncidentListModel" Title="Destino" Field="@(x => x.Destino)" Filterable="true" Sortable="true" Width="12%">
+                <Template>
+                    @if (context.Destino == null)
+                    {
+                        <div>-</div>
+                    }
+                    else
+                    {
+                        <div>@context.Destino</div>
+                    }
+                </Template>
+            </Column>
+            <Column TableItem="IncidentListModel" Title="Reporte" Field="@(x => x.Destino)"  Width="8%">
+                <Template>
+                    <PdfComponent IncidentCode="@context.Codigo" IncidentState="@context.Estado" ChangeLoading="@IsLoading"></PdfComponent>
+                </Template>
+            </Column>
+
+            <EmptyDataTemplate>
+                <div class="text-center">
+                    No se encontraron incidentes registrados.
+                </div>
+            </EmptyDataTemplate>
+
+            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+        </Table>
+    </div>
+</Loading>
+
+<MatThemeProvider Theme="@AddButtonTheme">
+    <MatFAB Icon="@MatIconNames.Add" Class="app-fab--absolute" OnClick="@(_ => Redirect())" data-toggle="tooltip" title="Presione para agregar un nuevo incidente"></MatFAB>
+</MatThemeProvider>
+

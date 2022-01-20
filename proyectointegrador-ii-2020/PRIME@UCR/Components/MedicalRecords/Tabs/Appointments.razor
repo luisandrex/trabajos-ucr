@@ -1,0 +1,86 @@
+﻿@using BlazorTable
+@using PRIME_UCR.Domain.Models.Appointments
+@using PRIME_UCR.Domain.Models.MedicalRecords
+@inject IIncidentService incident_service
+@inject IMedicalRecordService medical_record_service
+@inject IAppointmentService appointment_service
+@inject NavigationManager NavManager
+<h3>Lista de Citas</h3>
+
+<style>
+    body {
+        background-color: white;
+    }
+</style>
+
+<Loading IsLoading="appointments == null">
+    <Table TableItem="DateIncidentModel" Items="dat_in_link" PageSize="5" @ref="AppointmIncidentModel" ColumnReorder="true" ShowSearchBar="true" class="table table-bordered">
+        @*Field="@(x => x.date.Id)"*@
+        <Column TableItem="DateIncidentModel" Title="Numero de Cita" Width="20%">
+            <Template>
+                @if (!context.appointment_status)
+                {
+                    <a href="@get_date_link(context.incident.Codigo)">@context.incident.Codigo</a>
+                }
+                else
+                {
+                    <a href="@get_appointment_link(context.appointment.Id)">@context.appointment.Codigo</a>
+                }
+            </Template>
+        </Column>
+
+        @* Field="@(x => x.type)" *@
+        <Column TableItem="DateIncidentModel" Title="Tipo" Width="20%">
+            <Template>
+                <p>@context.get_appointment_type()</p>
+            </Template>
+        </Column>
+
+        @*Field="@(x => x.incident.Codigo)"*@
+        <Column TableItem="DateIncidentModel" Title="Código" Width="20%">
+            <Template>
+                @if (context.incident != null)
+                {
+                    <p>@context.incident.Codigo</p>
+                }
+                else
+                {
+                    <p>@context.appointment.Codigo</p>
+                }
+            </Template>
+        </Column>
+
+        @*Field="@(x => x.date.FechaHoraCreacion)"*@
+        <Column TableItem="DateIncidentModel" Title="Fecha creación" Width="20%">
+            <Template>
+                <p>@context.date.FechaHoraCreacion</p>
+            </Template>
+        </Column>
+
+        @*Field="@(x => x.medical_center.Nombre)"*@
+        <Column TableItem="DateIncidentModel" Title="Lugar de atención" Width="20%">
+            <Template>
+                @if (context.incident != null)
+                {
+                    <p>@context.medical_center.Nombre</p>
+                }
+                else
+                {
+                    <p>@context.appointment.medical_center.Nombre</p>
+                }
+            </Template>
+        </Column>
+
+        <EmptyDataTemplate>
+            <div class="text-center">
+                No se encontraron citas relacionadas al expediente.
+            </div>
+        </EmptyDataTemplate>
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+    </Table>
+</Loading>
+
+<MatThemeProvider Theme="@AddButtonTheme">
+    <MatFAB Icon="@MatIconNames.Add" Class="app-fab--absolute" OnClick="@(_ => Redirect())"></MatFAB>
+</MatThemeProvider>

@@ -1,0 +1,12 @@
+﻿@page "/user_administration/resendValidationEmail"
+@attribute [HasPermission(Domain.Constants.AuthorizationPermissions.CanManageUsers)]
+<h3>Reenvio de correos de confirmación a usuarios</h3>
+<hr />
+<div class="row">
+    <div class="col-sm-2 col-md-2 mb-4">
+        <UserAdministrationMenuComponent />
+    </div>
+    <div class="col col-sm-10 col-md-10">
+        <NotAuthenticatedUsersComponent />
+    </div>
+</div>

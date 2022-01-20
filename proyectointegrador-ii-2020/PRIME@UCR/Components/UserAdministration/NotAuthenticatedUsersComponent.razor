@@ -1,0 +1,23 @@
+﻿@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.UserAdministration
+
+@if (statusMessage != String.Empty)
+{
+    <StatusMessage Message="@statusMessage" Class="@messageType" />
+}
+<Loading IsLoading="ListNotAuthenticatedUsers == null || isLoading == true">
+    <Table TableItem="Usuario" Items="ListNotAuthenticatedUsers" PageSize="12">
+        <Column TableItem="Usuario" Title="" Field="@(x => x.EmailConfirmed)" Width="1%">
+            <Template Context="button">
+                <center>
+                    <button class="btn btn-primary btn-sm" aria-disabled="@button.EmailConfirmed" type="button" @onclick="(()=>resendEMailConfirmation(button.Email))">Reenviar</button>
+                </center>
+            </Template>
+        </Column>
+        <Column TableItem=" Usuario" Title="Correo del usuario" Field="@(x => x.Email)" Width="30%" />
+        <Column TableItem=" Usuario" Title="Nombre del usuario" Field="@(x => x.Persona.NombreCompleto)" Width="30%" />
+
+        <Pager ShowPageNumber="true" ShowTotalCount="true" ShowPageSizes="true" />
+    </Table>
+</Loading>

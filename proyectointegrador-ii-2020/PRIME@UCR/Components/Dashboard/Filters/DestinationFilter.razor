@@ -1,0 +1,38 @@
+﻿@using PRIME_UCR.Components.Controls
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse2">Destino</a>
+                <i data-toggle="collapse" href="#collapse2" class="fa fa-toggle-down"></i>
+            </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+            <Loading IsLoading="_isLoading">
+                <EditForm Model="Value" OnValidSubmit="@Save">
+                    <DropDownMenu Data="@_medicalCenters"
+                                  Label="Centro médico"
+                                  TextProperty="Nombre"
+                                  DefaultText="Sin filtro"
+                                  Value="Value._selectedMedicalCenterDestination.MedicalCenter"
+                                  ValueExpression="() => Value._selectedMedicalCenterDestination.MedicalCenter"
+                                  ValueChanged="@((CentroMedico mc) => OnChangeMedicalCenter(mc))"
+                                  UseValidation="false"
+                                  Required="false" />
+                    <div class="text-left">
+                        @if (!_changesMade)
+                        {
+                            <button disabled type="submit" class="btn btn-primary">Aplicar</button>
+                            <button disabled class="btn btn-outline-secondary">Descartar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" data-toggle="collapse" href="#collapse2">Aplicar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapse2">Descartar</button>
+                        }
+                    </div>
+                </EditForm>
+            </Loading>
+        </div>
+    </div>
+</div>

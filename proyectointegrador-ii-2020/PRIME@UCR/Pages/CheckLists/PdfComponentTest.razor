@@ -1,0 +1,26 @@
+﻿@page "/checklist/PdfComponentTest"
+@using Microsoft.AspNetCore.Components;
+@using PRIME_UCR.Application.Services;
+@using PRIME_UCR.Domain.Models;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+@using PRIME_UCR.Application.Services.CheckLists;
+@using PRIME_UCR.Components.CheckLists.Plantillas;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.Linq;
+@using PRIME_UCR.Domain.Models.CheckLists;
+
+<Loading IsLoading="_loading">
+    <PdfComponent IncidentCode="2020-12-02-0001-IT-TER" IncidentState="Asignado" ChangeLoading="ChangeLoading"></PdfComponent>
+</Loading>
+
+@code {
+    public bool _loading = false;
+
+    void ChangeLoading(bool loading)
+    {
+        _loading = loading;
+    }
+}
+
+

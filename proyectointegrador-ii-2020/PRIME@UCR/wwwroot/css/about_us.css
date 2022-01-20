@@ -1,0 +1,20 @@
+﻿h1 {
+    text-align: center;
+}
+
+body {
+    font-family: Arial;
+    background: #E6E6E6;
+}
+
+.team {
+    list-style-type: disc;
+}
+
+.team > ul > li {
+    list-style-type: square;
+}
+
+.about_us_content {
+    background: #ffffff;
+}

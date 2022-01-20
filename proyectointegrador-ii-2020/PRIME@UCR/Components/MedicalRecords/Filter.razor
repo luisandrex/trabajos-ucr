@@ -1,0 +1,15 @@
+﻿<div class="form-inline">
+    <label class="sr-only" for="filter-name">Filter</label>
+    <input type="text" class="form-control mb-2 mr-sm-2"
+           @bind="@FilterBox"
+           placeholder="Filtrar por nombre" />
+    <button type="button" class="btn btn-outline-dark mr-sm-2 mb-2"
+            @onclick="@(() => set_filter(FilterBox))">
+        Buscar
+    </button>
+    <button type="button" class="btn btn-outline-dark mb-2"
+            @onclick="@ClearFilter">
+        Limpiar Busqueda
+    </button>
+</div>
+

@@ -1,0 +1,51 @@
+﻿<h3>MedicalAppointmentForm</h3>
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.UserAdministration
+@using PRIME_UCR.Application.Services.UserAdministration
+@inject ILocationService LocationService
+@inject IDoctorService DoctorService
+@inject IAppointmentService AppointmentService 
+
+@if (options_unselected) { 
+    <StatusMessage Message="Debe seleccionar los datos obligatorios" Class="warning"></StatusMessage>
+}
+
+@if (register_success) { 
+    <StatusMessage Message="Cita creada exitosamente" Class="success"></StatusMessage>
+}
+
+
+<Loading IsLoading="_contextDoctor == null">
+    <EditForm EditContext="_contextDoctor">
+        <FluentValidationValidator />
+        <DropDownMenu T="Médico" Data="DoctorList"
+                      Label="Médicos"
+                      TextProperty="NombreCompleto"
+                      DefaultText="Seleccione un Médico"
+                      Required="true"
+                      Disabled="false"
+                      @bind-Value="@selectedDoctor" />
+
+        <DropDownMenu T="CentroMedico" Data="MedicalCenterList"
+                      Label="Centros Medicos"
+                      DefaultText="Seleccione un Centro Médico"
+                      TextProperty="Nombre"
+                      Required="true"
+                      Disabled="false"
+                      @bind-Value="@selectedMedicalCenter" />
+
+
+        <div class="form-group">
+            <label>Fecha de la cita<strong class="text-danger">*</strong></label>
+            <InputDate min="@(minTime.ToString("yyyy-MM-dd"))" id="FechaHoraCreacion" @bind-Value="@date" class="form-control"></InputDate>
+        </div>
+
+        @*<DatePicker @bind-Value="@date"
+        Label="Fecha de nacimiento"
+        Max="@DateTime.Today.AddYears(20)"
+        Min="@DateTime.Today" Required="true" />*@
+
+        <button class="btn btn-dark" @onclick="MakeAppointment">Guardar</button>
+
+    </EditForm>
+</Loading>

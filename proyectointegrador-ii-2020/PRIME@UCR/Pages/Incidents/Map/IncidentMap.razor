@@ -1,0 +1,67 @@
+﻿@page "/map"
+@using PRIME_UCR.Components.Controls
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanViewMapsInRealTime)]
+
+<h3>Mapa de incidentes en tiempo real</h3>
+<br />
+<Loading IsLoading="@(StateStore.Value is LoadingMapState)">
+    @if (StateStore.Value is LoadedMapState s)
+    {
+        <div class="jumbotron white-panel" style="height: 100vh">
+            <div class="row">
+                <div class="col">
+                    <EditForm Model="s.UnitFilter ?? new Modalidad()">
+                        <input autofocus hidden/>
+                        <DropDownMenu Data="@s.AvailableUnitFilters.ToList()"
+                                      Label="Filtro por tipo de unidad"
+                                      DefaultText="Sin filtro"
+                                      TextProperty="Tipo"
+                                      UseValidation="false"
+                                      Required="false"
+                                      Value="s.UnitFilter"
+                                      ValueExpression="() => s.UnitFilter"
+                                      ValueChanged="@((Modalidad f) => OnUnitFilterChange(f))"
+                                      ValueComparer="@((Modalidad f) => f.Tipo == s.UnitFilter?.Tipo)"/>
+                    </EditForm>
+                </div>
+                <div class="col">
+                    <EditForm Model="s.StateFilter ?? new Estado()">
+                        <DropDownMenu Data="@s.AvailableStateFilters.ToList()"
+                                      Label="Filtro por estado del incidente"
+                                      DefaultText="Sin filtro"
+                                      TextProperty="Nombre"
+                                      UseValidation="false"
+                                      Required="false"
+                                      Value="s.StateFilter"
+                                      ValueExpression="() => s.StateFilter"
+                                      ValueChanged="@((Estado f) => OnStateFilterChange(f))"
+                                      ValueComparer="@((Estado f) => f.Nombre == s.StateFilter?.Nombre)" />
+                    </EditForm>
+                </div>
+            </div>
+            @if (s.GpsData.Any())
+            {
+
+                <RadzenGoogleMap style="height: 90%"
+                                 Zoom="10" ApiKey="@Configuration["MapApiKey"]"
+                                 Center="@(new GoogleMapPosition{ Lng = s.Center.Longitude, Lat = s.Center.Latitude })"
+                                 MarkerClick="@OnMarkerClick">
+                    <Markers>
+                        @foreach (var gps in s.GpsData)
+                        {
+                            <RadzenGoogleMapMarker Title="@(gps.IncidentCode)"
+                                                   Label="@(gps.IncidentCode)"
+                                                   Position=@(new GoogleMapPosition {Lat = gps.CurrentLatitude, Lng = gps.CurrentLongitude}) />
+                        }
+                    </Markers>
+                </RadzenGoogleMap>
+            }
+            else
+            {
+                <br />
+                <StatusMessage Class="info" Message="No hay traslados para el tipo de unidad seleccionado."></StatusMessage>
+            }
+        </div>
+    }
+</Loading>

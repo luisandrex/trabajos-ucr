@@ -1,0 +1,26 @@
+﻿<style>
+    .wrapper {
+        position: absolute;
+        top: 190px;
+        right: 350px;
+    }
+
+    #txtbox {
+        width: 50px;
+    }
+</style>
+
+
+
+
+<div class="form-inline wrapper">
+    <label class="sr-only" for="filter-name">Filter</label>
+    <input type="text" class="form-control mb-2 mr-sm-2" id="txtbox"
+           @bind="@RecordsPerPage"
+           placeholder="" />
+    <button type="button" class="btn btn-outline-primary mr-sm-2 mb-2"
+            @onclick="@(() => set_records_per_page())">
+        Establecer registros
+    </button>
+</div>
+

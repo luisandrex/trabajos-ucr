@@ -1,0 +1,8 @@
+﻿@using PRIME_UCR.Components.MedicalAppointments
+@inject IMedicalRecordService MedicalRecordService
+@page "/create-medical-appointment/{ExpId}"
+@using PRIME_UCR.Application.Implementations.UserAdministration
+@using PRIME_UCR.Domain.Constants
+@attribute [HasPermission(AuthorizationPermissions.CanSeeMedicalRecordsOfHisPatients)]
+<MedicalAppointmentForm RecordModel="@recordModel">
+</MedicalAppointmentForm>

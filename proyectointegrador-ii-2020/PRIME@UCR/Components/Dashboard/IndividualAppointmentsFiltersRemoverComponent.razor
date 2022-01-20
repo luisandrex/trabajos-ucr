@@ -1,0 +1,27 @@
+﻿@using PRIME_UCR.Components.Dashboard.Filters
+
+@if(AppointmentFilters.Hospital.Count > 0)
+{
+    <GenericIndividualFilterRemover Label="Hospitales"
+                                    ValueChanged="RemoveAllHospitalsFilter" />
+
+    foreach(var hospital in AppointmentFilters.Hospital)
+    {
+        <GenericIndividualFilterRemover ExtraLabel="Hospital"
+                                        Label="@hospital.MedicalCenter.Nombre"
+                                        ValueChanged="() => RemoveSpecificHospital(hospital)" />
+    }
+}
+
+@if(AppointmentFilters.PatientModel.Count > 0)
+{
+    <GenericIndividualFilterRemover Label="Pacientes"
+                                    ValueChanged="RemoveAllPatientsFilter" />
+
+    foreach(var patient in AppointmentFilters.PatientModel)
+    {
+        <GenericIndividualFilterRemover ExtraLabel="Paciente"
+                                        Label="@patient.Patient.Cédula"
+                                        ValueChanged="() => RemoveSpecificPatient(patient)" />
+    }
+}

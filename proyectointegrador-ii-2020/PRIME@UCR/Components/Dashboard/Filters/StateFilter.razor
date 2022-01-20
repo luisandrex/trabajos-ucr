@@ -1,0 +1,39 @@
+﻿@using PRIME_UCR.Components.Controls
+
+<Loading IsLoading="_isLoading">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse7">Estado</a>
+                    <i data-toggle="collapse" href="#collapse7" class="fa fa-toggle-down"></i>
+                </h4>
+            </div>
+            <div id="collapse7" class="panel-collapse collapse">
+                <EditForm Model="Value" OnValidSubmit="@Save">
+                    <DropDownMenu Data="_stateTypes"
+                                  Label="Estado"
+                                  TextProperty="Nombre"
+                                  Value="Value._selectedState"
+                                  ValueExpression="() => Value._selectedState"
+                                  ValueChanged="@((Estado e) => OnStateChange(e))"
+                                  DefaultText="Sin filtro"
+                                  UseValidation="false"
+                                  Required="false" />
+                    <div class="text-left">
+                        @if (!_changesMade)
+                        {
+                            <button disabled type="submit" class="btn btn-primary">Aplicar</button>
+                            <button disabled class="btn btn-outline-secondary">Descartar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary" data-toggle="collapse" href="#collapse7">Aplicar</button>
+                            <button role="button" @onclick:preventDefault @onclick="@Discard" class="btn btn-outline-secondary" data-toggle="collapse" href="#collapse7">Descartar</button>
+                        }
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</Loading>

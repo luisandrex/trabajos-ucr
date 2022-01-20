@@ -1,0 +1,276 @@
+﻿@page "/checklist/{id:int}"
+@inherits SingleCheckListBase
+@using PRIME_UCR.Application.DTOs.UserAdministration;
+@using PRIME_UCR.Application.Implementations.UserAdministration;
+@using PRIME_UCR.Domain.Constants
+@using PRIME_UCR.Components.CheckLists.Plantillas
+@attribute [HasPermission(AuthorizationPermissions.CanCreateChecklist)]
+@implements IDisposable
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<h2>Plantillas de listas de chequeo</h2>
+<hr />
+<Loading IsLoading="lists == null">
+    <div class="row">
+        <CheckListMenu Lists="lists" />
+        <div class="col">
+            @* Contains editable information about this checklist *@
+            <div class="container" id="contAll_LC" style="background: white;">
+                <StatusMessage Message="@_statusMessage" Class="success" />
+                <h3>Definición de una plantilla de lista de chequeo</h3>
+                @if (list.Activada && list.Editable)
+                {
+                    <EditForm EditContext="@editContext" OnValidSubmit="@UpdateCheckList">
+                        <FluentValidationValidator />
+                        <div id="def_LC">
+                            <div class="input-group row">
+                                <label for="checklistName" class="col-sm-2 col-form-label">Nombre</label>
+                                <div class="col-sm-9">
+                                    @* Editable input for the name of the checklist *@
+                                    <TextBox Label="" @bind-Value="@editedList.Nombre" Required="true" />
+                                </div>
+                                <div class="col-sm-1">
+                                    @* Displys the image of the checklist *@
+                                    <button type="button" class="none" data-toggle="dropdown" id="BN_LC">
+                                        <img src="@list.ImagenDescriptiva" width="50" height="50" data-toggle="tooltip" title="Cambiar imagen" />
+                                    </button>
+                                    @* Drop zone for the image of the checklist, displyed in a dropdown menu for the checklist image *@
+                                    <ul class="dropdown-menu customLoadImage" role="menu">
+                                        <li><LoadImageComponent @bind-list="list" update="update" /></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="input-group row">
+                                @* Editable input for the description of the checklist *@
+                                <label for="checklistDescription" class="col-sm-2 col-form-label"><span style="color:black">Descripción </span></label>
+                                <div class="col-sm-10">
+                                    <TextAreaInput @bind-Value="editedList.Descripcion" Rows="3" Cols="50" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="input-group row">
+                                @* Editable input for the type of the checklist with predefined options *@
+                                <label for="checklistType" class="col-sm-2 col-form-label"><span style="color:black">Tipo </span></label>
+                                <div class="col-sm-4">
+                                    <InputSelect @bind-Value="editedList.Tipo" class="custom-select ">
+                                        @for (int index = 0; index < _types.Count(); index++)
+                                        {
+                                            <option value="@_types[index]">@_types[index]</option>
+                                        }
+                                    </InputSelect>
+
+                                </div>
+                                @* Editable input for the order of the checklist with a recommended value *@
+                                <label for="checklistOrder" class="col-sm-1 col-form-label"><span style="color:black">Orden </span></label>
+                                <div class="col-sm-2">
+                                    <IntegerInput Label="" @bind-Value="editedList.Orden" Min="1" Required="false" />
+                                </div>
+                                @* Read only display for the checklist id *@
+                                <label for="checklistId" class="col-sm-1 col-form-label"><span style="color:black">Id </span></label>
+                                <span class="col-sm-2">
+                                    <input class="form-control" type="number" id="checklistId" name="checklistId" disabled="disabled" @bind-value="@list.Id" />
+                                </span>
+                            </div>
+                            <br />
+                            <div align="center">
+                                @if (formInvalid)
+                                {
+                                    <button type="submit" class="btn btn-primary">Guardar cambios</button> }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-secondary" disabled>Guardar cambios</button>
+                                }
+                                <a class="btn btn-outline-secondary" @onclick="Dispose" id="a_LC3">Cancelar</a>
+                            </div>
+                            <br />
+                        </div>
+                    </EditForm>
+                }
+                else
+                {
+                    <div id="def_LC">
+                        <div class="input-group row">
+                            <label for="checklistName" class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-9">
+                                @list.Nombre
+                            </div>
+                            <div class="col-sm-1">
+                                @* Displys the image of the checklist *@
+                                    <img src="@list.ImagenDescriptiva" width="50" height="50"/>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="input-group row">
+                            @* Editable input for the description of the checklist *@
+                            <label for="checklistDescription" class="col-sm-2 col-form-label"><span style="color:black">Descripción </span></label>
+                            <div class="col-sm-10">
+                                @list.Descripcion
+                            </div>
+                        </div>
+                        <br />
+                        <div class="input-group row">
+                            @* Editable input for the type of the checklist with predefined options *@
+                            <label for="checklistType" class="col-sm-2 col-form-label"><span style="color:black">Tipo </span></label>
+                            <div class="col-sm-4">
+                                @list.Tipo
+                            </div>
+                            @* Editable input for the order of the checklist with a recommended value *@
+                            <label for="checklistOrder" class="col-sm-1 col-form-label"><span style="color:black">Orden </span></label>
+                            <div class="col-sm-2">
+                               @list.Orden
+                            </div>
+                            @* Read only display for the checklist id *@
+                            <label for="checklistId" class="col-sm-1 col-form-label"><span style="color:black">Id </span></label>
+                            <span class="col-sm-2">
+                                <input class="form-control" type="number" id="checklistId" name="checklistId" disabled="disabled" @bind-value="@list.Id" />
+                            </span>
+                        </div>
+                        </div>
+                        }
+                        <br />
+                        <div class="alert alert-info container" role="alert">@*state for checklist if is active or not *@
+                        <div class="row">
+                            <div class="col text-center">
+                                <b>Estado de la lista de chequeo:</b>
+                                @if (list.Activada)
+                                {<a>Activada</a>}
+                                else
+                                {<a>Desactivada</a>}
+                            </div>
+                            @if (list.Activada)
+                            {
+                                <div class="col text-center">
+                                    <p style="text-align:center; padding:0px;margin-bottom: 0px">
+                                        @instruct[2]
+                                        <button type="submit" class="btn btn-primary" @onclick="@UpdateActive">Desactivar</button>
+                                    </p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col text-center">
+                                    <p style="text-align:center; padding:0px;margin-bottom: 0px">
+                                        @instruct[3]
+                                        <button type="submit" class="btn btn-primary" @onclick="@UpdateActive">Activar</button>
+                                    </p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <SummaryMessage Content="states" Values="details" Class="info" /> @*checklist template state*@
+                    <h3> Items de la plantilla de lista de chequeo</h3>
+                    <div id="Body_LC">
+                        @if (items == null)
+                        {
+                            <p>Cargando items.</p> }
+                        else
+                        {
+                            if (items.Count() == 0)
+                            {
+                                <p>No se ha creado ningún item para esta lista de chequeo. Presione el botón de crear item para agregarle un item.</p> }
+                            else
+                            {
+                        <RadzenTree Data=@coreItems ondragover="event.preventDefault();" Style="width: 100%">
+                                <RadzenTreeLevel TextProperty="Nombre" ChildrenProperty="SubItems">
+                                    <Template>
+                                        @{
+                                            PRIME_UCR.Domain.Models.CheckLists.Item itemInList = (context.Value as PRIME_UCR.Domain.Models.CheckLists.Item);
+                                            int itemIndex = getItemIndex(itemInList, orderedList);
+                                        }
+                                        @if (itemInList.SubItems.Count() <= 0)
+                                        {
+                                            <div class="blankSpace">.</div>
+                                        }
+
+                                        <table class="checklist-table table" draggable="true" @ondrop="@(()=> Drop(itemInList))" @ondrag="@(()=> StartDrag(itemInList))">
+                                            @* Contains information about every item in this checklist *@
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="2" class="align-middle" style="width: 100px;">
+                                                        @* Displys the image of the item *@
+
+                                                        <div style="width: 100%; display:inline-flex;">
+                                                            <p style="margin:auto">⁞⁞</p>
+                                                            <button type="button" class="none" data-toggle="dropdown" id="BN_LC">
+                                                                <img src="@itemInList.ImagenDescriptiva" width="50" height="50" data-toggle="tooltip" title="Cambiar imagen" />
+                                                            </button>
+
+                                                            @* Drop zone for the image of the item, displyed in a dropdown menu for the item image *@
+                                                            <ul class="dropdown-menu customLoadImage" role="menu">
+                                                                <li><LoadImageComponent @bind-item="itemInList" update="update" /></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+
+                                                    <th class="align-middle" data-toggle="tooltip" title="@itemInList.Nombre">@truncate(itemInList.Nombre, orderedListLevel[itemIndex], 1)</th>
+                                                    <td rowspan="2" class="align-middle" align="right" style="width: 54px">
+                                                        @if (list.Activada && list.Editable)
+                                                        {
+                                                            @* Drop down button to show additional options *@
+                                                            <button type="button" class="btn btn-default " data-toggle="dropdown">
+                                                                ⋮<span class="caret"></span>
+                                                                <span class="sr-only">Desplegar menú</span>
+                                                            </button> @* Button to create a new sub item *@
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><button class="dropdown-item" @onclick="() => CreateSubItem(itemInList.Id)">Agregar Subítem</button></li>
+                                                        <li><button class="dropdown-item" @onclick="() => EditItem(itemInList.Id)">Editar ítem</button></li>
+                                                        <li><button class="dropdown-item" @onclick="() => DeleteItem(itemInList.Id)">Eliminar item</button></li>
+                                                    </ul>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-middle" title="@itemInList.Descripcion">@truncate(itemInList.Descripcion, orderedListLevel[itemIndex], 2)</td>
+                                                </tr>
+                                                @if (list.Activada && list.Editable)
+                                                {
+                                                    @if (createSubItem == true && parentItemId == itemInList.Id)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <CreateItem @bind-item="tempItem" creating="createSubItem" OnCreatingChanged="creatingFinished">Crear SubItem</CreateItem>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    @if (editItem == true && parentItemId == itemInList.Id)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <EditItem @bind-item="tempItem" editing="editItem" OnEditingChanged="editingFinished">Editar Item</EditItem>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    @if (invalidItemMoved == itemInList.Id)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <StatusMessage Message="@_moveItemInvalid" Class="warning" />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </Template>
+                                </RadzenTreeLevel>
+                            </RadzenTree>
+                                
+                            }
+                        }
+                        <hr />
+                        @if (list.Activada && list.Editable) {
+                            if (createItem == false) {
+                
+                                @* Button to create a new item *@
+                                <button class="btn btn-primary" @onclick="StartNewItemCreation" id="BP_LC6">+</button><a>Crear ítem</a> 
+                            }else{
+                                    <CreateItem @bind-item="tempItem" creating="createItem" OnCreatingChanged="creatingFinished">Crear Item</CreateItem>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+    </div>
+    <br />
+ </Loading>

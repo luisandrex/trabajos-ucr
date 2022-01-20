@@ -1,0 +1,28 @@
+﻿<Fluxor.Blazor.Web.StoreInitializer />
+<CascadingAuthenticationState>
+    <CascadingBlazoredModal>
+
+        <Router AppAssembly="@typeof(Program).Assembly">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                    <NotAuthorized>
+                        <AuthenticationStateMessage />
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+            </Found>
+            <NotFound>
+                <LayoutView>
+                    <HeaderComponent />
+
+                    <h3>
+                        Error: La página no existe
+                    </h3>
+                    <div style="position: absolute; bottom: 0; width: 100%;">
+                        <FooterComponent />
+                    </div>
+                </LayoutView>
+            </NotFound>
+        </Router>
+
+    </CascadingBlazoredModal>
+</CascadingAuthenticationState>

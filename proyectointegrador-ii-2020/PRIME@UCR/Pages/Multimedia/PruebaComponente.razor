@@ -1,0 +1,44 @@
+﻿@page "/prueba-componente"
+@using PRIME_UCR.Components.Multimedia
+@inject IJSRuntime JS
+
+<h3>TEST</h3>
+<p>
+    Esta página solamente se creo con el fin de probar el componente que se desea implementar
+    para adjuntar contenido multimedia
+</p>
+
+<hr />
+<hr />
+
+<MultimediaContentComponent></MultimediaContentComponent>
+
+<br />
+<br />
+
+@*<video autoplay></video>*@
+<button @onclick="ShowCamera">Camara</button>
+
+@code {
+
+    List<MultimediaContent> MC;
+
+    protected override void OnInitialized()
+    {
+        MC = new List<MultimediaContent>();
+        MC.Add(new MultimediaContent
+        {
+            Nombre = "prueba.txt",
+            Tipo = "txt",
+            Archivo = "",
+            Fecha_Hora = DateTime.Now
+        });
+
+    }
+
+    async Task ShowCamera()
+    {
+        await JS.InvokeAsync<bool>("openCamera", null);
+    }
+
+}

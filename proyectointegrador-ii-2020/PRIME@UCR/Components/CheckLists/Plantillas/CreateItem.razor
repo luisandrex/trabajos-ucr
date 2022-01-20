@@ -1,0 +1,50 @@
+﻿@inherits CreateItemBase
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<div class="container" id="Create_I-SI_LC">
+    <h5>@ChildContent</h5>
+    <br />
+    @* Contains the form to create a new item *@
+    <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+        <FluentValidationValidator />
+        @* Input for the name of the item *@
+        <TextBox Label="Nombre " id="name" @bind-Value="item.Nombre" Required="true" />
+        <br />
+        @* Input for the description of the item *@
+        <label for="description">Descripción</label>
+        <TextAreaInput @bind-Value="item.Descripcion" Rows="3" Cols="50" />
+        <br />
+        <div class="form-row">
+            @* Input for the order of the item with a recommended value *@
+            <div class="col-6">
+                <label for="order">Orden <span style=" color:red">*</span></label>
+                <IntegerInput Label="" @bind-Value="item.Orden" Min="0" Required="true" />
+            </div>
+        </div>
+        <br />
+        <label>Imagen</label>
+        <div class="form-row">
+            @* Drop zone for the image of the item *@
+            <div class="col-6">
+                <LoadImageComponent @bind-item="item" />
+            </div>
+            @if (item.ImagenDescriptiva != null)
+            {
+<div class="col-6">
+    <img src="@item.ImagenDescriptiva" width="50" height="50" />
+</div>}
+        </div>
+        <br />
+
+        <div align="center">
+            @if (formInvalid)
+            {
+<button type="submit" class="btn btn-primary">Guardar Item</button> }
+else
+{
+<button type="submit" class="btn btn-secondary" disabled="@formInvalid">Guardar item</button>}
+            <a class="btn btn-outline-secondary" @onclick="Dispose" id="a_LC3">Cancelar</a>
+        </div>
+    </EditForm>
+</div>
+<br />

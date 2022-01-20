@@ -1,0 +1,64 @@
+﻿@using PRIME_UCR.Components.Controls
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.UserAdministration;
+
+
+<h3>Solicitud de Permisos</h3>
+<br />
+
+<div class="wrapper" style="padding-bottom: 1px; background-color: white">
+
+    <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px; padding-top: 10px;">
+        <h5>A continuación se muestra la lista de permisos que posee actualmente</h5>
+        <Table TableItem="Permiso" Items="AskForPermissionModel.AssignedPermissions" PageSize="12">
+            <Column TableItem="Permiso" Title="Descripción de permiso" Field="@(x => x.DescripciónPermiso)" Width="44%" />
+            <Column TableItem="Permiso" Title="ID" Field="@(x => x.IDPermiso)" Width="5%" Align="Align.Right" />
+            <Pager ShowPageNumber="true" />
+        </Table>
+    </div>
+
+    <div class="rounded" style="background-color: white;padding-left: 10px;padding-right: 10px; padding-top: 10px;">
+        <h5>A continuación se muestra la lista de permisos que puede solicitar</h5>
+        <Table TableItem="Permiso" Items="AskForPermissionModel.NotAssignedPermissions" PageSize="12">
+            <Column TableItem="Permiso" Title="" Field="@(x => x.IDPermiso)" Width="1%">
+                <Template Context="checkbox">
+                    <center>
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="customCheck @checkbox.IDPermiso" @onchange="((ChangeEventArgs c) => update_list(checkbox.IDPermiso,c))" />
+                            <label class="custom-control-label" for="customCheck @checkbox.IDPermiso"></label>
+                        </div>
+                    </center>
+                </Template>
+            </Column>
+            <Column TableItem="Permiso" Title="Descripción de permiso" Field="@(x => x.DescripciónPermiso)" Width="44%" />
+            <Column TableItem="Permiso" Title="ID" Field="@(x => x.IDPermiso)" Width="5%" Align="Align.Right" />
+
+            <Pager ShowPageNumber="true" />
+        </Table>
+    </div>
+
+    <div class="col-12">
+        <TextBox Label="Justifique por qué requiere dicho permiso(s):"
+                 @bind-Value="AskForPermissionModel.UserMessage"
+                 Required="true"
+                 Type="Text" />
+    </div>
+
+
+    <div class="m-3">
+        @if (IsBusy)
+        {
+            <button class="btn btn-primary-noHover width:13em mt-2" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" style="background-color:#095290" role="status" aria-hidden="true"></span>
+                Validando información
+            </button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary width:13em mt-2">Enviar Solicitud</button>
+        }
+    </div>
+
+</div>
+
+<br/>

@@ -1,0 +1,44 @@
+﻿@using PRIME_UCR.Components.MedicalAppointments.Tabs
+@using BlazorTable
+@using PRIME_UCR.Domain.Models.Appointments
+@using PRIME_UCR.Components.MedicalAppointments
+@inject IAppointmentService appointment_service;
+
+<div class="containe">
+    @if (Active == MADetailsTab.Recetas)
+    {
+        <div class="prescription_list">
+            <PrescriptionListComponent AppointmentId="@id"  NotifyChanges="updateChanges" Medpres="medicalprescrip"></PrescriptionListComponent>
+        </div>
+
+
+        <div class="drugselector">
+            <DrugSelectorComponent IdMedicalPrescription="@id" Active="drug_selector_active" Description_not_done="prescription_description_not_done" UpdateList="updatelist"></DrugSelectorComponent>
+        </div>
+
+    }
+    else if (Active == MADetailsTab.Multimedia)
+    {
+
+        <MedAppointmentMultimediaTab MedicalAppointmentId="@med_appointment_id" Pacient="@Appointment.Expediente.Paciente" ></MedAppointmentMultimediaTab>
+        <hr />
+
+    }
+    else if (Active == MADetailsTab.General)
+    {
+        <AppointmentGeneralInfo Appointment="@MedAppointment" Pacient="@Appointment.Expediente.Paciente"></AppointmentGeneralInfo>
+    }
+
+    else if (Active == MADetailsTab.Metricas)
+    {
+        <MetricsTab AppointmentId="@appointment_id" Pacient="@Appointment.Expediente.Paciente"></MetricsTab>
+
+    }
+    else if (Active == MADetailsTab.Referencias) { 
+        <ReferencesTab Medical_Appointment="@MedAppointment" Appointment="@Appointment" Pacient="@Appointment.Expediente.Paciente"></ReferencesTab>
+    }
+    else
+    {
+        <h4 class="text-danger">Not found</h4>
+    }
+</div>

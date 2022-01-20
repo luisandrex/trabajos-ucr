@@ -1,0 +1,11 @@
+﻿<div class="form-group">
+    <p class="rt-align">Nombre del archivo: </p>
+    <input type="text" class="form-control" 
+           disabled="@Disabled" 
+           @bind="Title" 
+           @oninput="OnChange">
+    @if (Error)
+    {
+        <p style="color: red">@ErrorMessage</p>
+    }
+</div>

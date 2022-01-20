@@ -1,0 +1,21 @@
+﻿@inherits GenericInput<string>
+
+<div class="form-group">
+    @if (!String.IsNullOrEmpty(Label))
+    {
+        @if (Required)
+        {
+            <label>@Label<strong class="text-danger">*</strong></label>
+        }
+        else
+        {
+            <label>@Label</label>
+        }
+    }
+    <textarea class="@($"form-control {ValidationCssClass}")"
+           value="@Value"
+           cols="@Cols"
+           rows="@Rows"
+           @onchange="OnChangeEvent" />
+    <ValidationMessage For="ValueExpression" />
+</div>

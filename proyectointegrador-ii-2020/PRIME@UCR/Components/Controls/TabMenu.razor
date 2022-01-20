@@ -1,0 +1,12 @@
+﻿@typeparam TEnum
+<ul class="@_tabClass flex-column">
+    @foreach (var tuple in Tabs)
+    {
+        <TabItem OnTabSetCallback="@((TEnum tab) => OnTabSet(tab))"
+                    Tab="tuple.Item1"
+                    CurrentTab="Value"
+                    Icon="@tuple.Item2"
+                    TabName="@(EnumUtils.GetDescription(tuple.Item1))"
+                    TooltipText="@TooltipText"/>
+    }
+</ul>

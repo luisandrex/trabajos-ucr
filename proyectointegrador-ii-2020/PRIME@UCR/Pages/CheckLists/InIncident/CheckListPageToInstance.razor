@@ -1,0 +1,29 @@
+﻿@page "/checklist/{incidentcod}"
+@inherits CheckListToInstanceBase
+@attribute [Authorize]
+@using PRIME_UCR.Components.CheckLists.InIncident
+
+<link href="css/Checklist.css" rel="stylesheet" />
+
+<div id="All_LC">
+    <h2> Listas de chequeo para asignar a un incidente</h2>
+    <hr />
+    @if (_exist)
+    {
+        <Loading IsLoading="lists == null">
+            @if (lists.Count() == 0)
+            {
+                <p><em class="nav-link">No se ha creado ninguna lista</em></p>
+            }
+            else
+            {
+                <ChecklistToAsign incidentCod="@incidentcod" />
+            }
+        </Loading>
+    }
+    else
+    {
+        <h4 class="text-danger">No se encontró el incidente solicitado.</h4>
+    }
+</div>
+<br />

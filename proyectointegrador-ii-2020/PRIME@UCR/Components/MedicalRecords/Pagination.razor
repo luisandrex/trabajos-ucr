@@ -1,0 +1,16 @@
+﻿<div class="pagination-component">
+    <nav aria-label="Page navitagion" class="wrapper_pages">
+        <ul class="pagination justify-content-center">
+            @foreach (var link in links)
+            {
+
+                <li @onclick="@(() => SelectAnotherPage(link))"
+                    style=" cursor: pointer;" class="page-item @(link.is_it_enabled() ? null: "disabled")
+                            @(link.is_it_active() ? "active" : null)">
+                    <span class="page-link" href="#">@link.get_text_representation()</span>
+                </li>
+
+            }
+        </ul>
+    </nav>
+</div>

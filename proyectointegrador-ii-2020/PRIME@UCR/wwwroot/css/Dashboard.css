@@ -1,0 +1,54 @@
+﻿#chartdiv {
+    width: 100%;
+    height: 600px;
+}
+
+#mapGraphDiv {
+    width: 100%;
+    height: 600px;
+}
+
+#IncidentsVsTimeChartComponentJS {
+    width: 100%;
+    height: 600px;
+}
+
+#IncidentsVsOriginLocationComponentJS {
+    width: 100%;
+    height: 600px;
+}
+
+#IncidentsVsDestinationLocationComponentJS {
+    width: 100%;
+    height: 600px;
+}
+
+#AppointmentsVsMedicalCenterComponent {
+    width: 100%;
+    height: 600px;
+}
+
+#AppointmentVsPatientComponent {
+    width: 100%;
+    height: 600px;
+}
+
+#AppointmentsVsMedicalRecordsWeightComponent {
+    width: 100%;
+    height: 400px;
+}
+
+#AppointmentsVsMedicalRecordsHeightComponent {
+    width: 100%;
+    height: 400px;
+}
+
+#AppointmentsVsMedicalRecordsPressureComponent {
+    width: 100%;
+    height: 400px;
+}
+
+
+.graph-zoom-modal {
+    width: calc(85vw - 32px);
+}
