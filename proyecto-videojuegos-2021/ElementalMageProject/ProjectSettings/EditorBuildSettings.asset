@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: d03dc48dbfa7571419d857871bbf0902
+  - enabled: 1
+    path: Assets/Scenes/BuyMenu.unity
+    guid: bc33008358e6bdc4980a5c3dd6b77bdd
+  - enabled: 1
+    path: Assets/Scenes/Worlds/Hub.unity
+    guid: afd21e2a5aab0104a89953728bbd8104
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom1.unity
+    guid: 320e26daec01bf14eb6bcf9c2b34ad3f
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom2.unity
+    guid: b025bf1f4c67f164aabe223c2428d523
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom3.unity
+    guid: 42bfe3b1ec1fc3847acd5c71f78ff265
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom4.unity
+    guid: d86182ef61c09204291624c099f4b7af
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom5.unity
+    guid: cba2813b10c7b1947900ddd24d60c122
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom6.unity
+    guid: 65f98e11a6212e1468f1b900b35bd7b0
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireRoom7.unity
+    guid: 043b1548048c9814a9fb4938d6cb69c4
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FireWorld/FireBossRoom.unity
+    guid: 4a61f458554222f4baab1e8d9153ba17
+  - enabled: 1
+    path: Assets/Scenes/DeathScreen.unity
+    guid: dfa13a587dc6ea24d8f9ca3abb9fad46
+  - enabled: 1
+    path: Assets/Scenes/WonScreen.unity
+    guid: ddd4656636247434e9b9a81c081e7000
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld1.unity
+    guid: a0e589da110b3f046b09ddab4e08f26a
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld2.unity
+    guid: bc1b3a5cb1aaea94e9253cf0deca272d
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld3.unity
+    guid: 91055dac578ace441a513ca7c0aae39d
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld4.unity
+    guid: 7227849080f18fe47b93934c959306a2
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld5.unity
+    guid: fc922a67c829ffd4694e8676bf24f65d
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld6.unity
+    guid: 049a4e73ff1349c42a736ce1856b283b
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirWorld7.unity
+    guid: 378df7f11d7d62249bcb40753c85d0bd
+  - enabled: 1
+    path: Assets/Scenes/Worlds/AirWorld/AirBossRoom.unity
+    guid: 062ec25710e4fd843ab7f227670ec361
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterBossRoom.unity
+    guid: 5e1eba255c68f694a972167249eb0e70
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld1.unity
+    guid: 58d6d2521b695654e82f07e0090d5ab0
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld2.unity
+    guid: 73095e4ad2eaf6c499cac3568ed3dc01
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld3.unity
+    guid: 0db03a91ef4aeca45b95ffb7eb370358
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld4.unity
+    guid: 907c3d19d0a7f674b832beb78311b1eb
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld5.unity
+    guid: 1e008023b5a745e4eb0c9feef132a9e7
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld6.unity
+    guid: 8aa8bdff03f7a6a4cb7df2e68ee54537
+  - enabled: 1
+    path: Assets/Scenes/Worlds/WaterWorld/WaterWorld7.unity
+    guid: bc772aad710594041bddf3d6112f9c49
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthBossRoom.unity
+    guid: d0723ef5c3281f44c99e2a9bccef378e
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld1.unity
+    guid: fbe3182e81cdeae409ff70380b9b6e4c
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld2.unity
+    guid: 392ec8404ca831d48907c28cefe33f68
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld3.unity
+    guid: 9091849db3170fb43ad54d1884cbecf7
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld4.unity
+    guid: c687f33bdaa2ad2448439bf47306850a
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld5.unity
+    guid: cd038bd9b41c2b8479e56c410e3312d3
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld6.unity
+    guid: 794a09a4bb39dc249b8953c7c4bc794c
+  - enabled: 1
+    path: Assets/Scenes/Worlds/EarthWorld/EarthWorld7.unity
+    guid: 16709a8a87e0038448cd23ab62de1150
+  - enabled: 1
+    path: Assets/Scenes/Worlds/FinalBoss.unity
+    guid: 3a00f9c9d55a2e0459e2566863ff7d8e
+  - enabled: 1
+    path: Assets/Scenes/CreditsScreen.unity
+    guid: 91918e8548dbc3048af21557794340c9
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: d03dc48dbfa7571419d857871bbf0902
+  - enabled: 1
+    path: Assets/Scenes/HowToPlayScreen.unity
+    guid: aa3ab0962486c094ab9bc7b067a56a76
+  m_configObjects: {}
